@@ -1,0 +1,39 @@
+% ============================================================
+%  מחוברים תמיד: טכנולוגיה וחיי היומיום
+%  הקובץ הראשי. הידור:  xelatex main → biber main → xelatex main ×2
+% ============================================================
+\documentclass[11pt, a4paper, openany]{report}
+\usepackage{style}
+\addbibresource{refs.bib}
+
+\begin{document}
+
+% ---------- שער ----------
+\input{chapters/cover}
+
+% ---------- תקציר ותוכן עניינים ----------
+\pagenumbering{roman}
+\input{chapters/00-abstract}
+{\hypersetup{linkcolor=night}\tableofcontents}
+\clearpage
+\pagenumbering{arabic}
+
+% ---------- פרקים ----------
+\input{chapters/01-intro}
+\input{chapters/02-history}
+\input{chapters/03-digital-day}
+\input{chapters/04-attention}
+\input{chapters/05-wellbeing}
+\input{chapters/06-smart-home}
+\input{chapters/07-balance}
+\input{chapters/08-summary}
+
+% ---------- ביבליוגרפיה ----------
+\chapter*{רשימת מקורות}
+\addcontentsline{toc}{chapter}{רשימת מקורות}
+\markboth{רשימת מקורות}{}
+\begin{english}
+\printbibliography[heading=none]
+\end{english}
+
+\end{document}

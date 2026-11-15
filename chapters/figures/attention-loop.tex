@@ -1,0 +1,43 @@
+% ---------- תרשים בלוקים: מעגל כלכלת הקשב (8 בלוקים) ----------
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  blk/.style={rectangle, rounded corners=5pt, draw=#1, line width=1.2pt,
+              fill=#1!12, text width=3.1cm, minimum height=1.25cm,
+              align=center, font=\headfont\small, drop shadow={opacity=0.15}},
+  blk/.default=screen,
+  arr/.style={-{Stealth[length=3mm]}, line width=1.4pt, draw=night!70},
+  num/.style={circle, fill=#1, text=white, font=\headfont\bfseries\footnotesize,
+              inner sep=1.5pt, minimum size=1.3em},
+]
+  % מרכז
+  \node[circle, fill=night, text=white, minimum size=2.6cm, align=center,
+        font=\headfont\bfseries, text width=1.8cm] (core) at (0,0) {\RL{הקשב}\\ \RL{שלך}};
+
+  % 8 בלוקים במעגל (נקראים עם כיוון השעון, מלמעלה)
+  % \RL{} שומר על סדר המילים העברי בתוך צמתי TikZ
+  \def\rad{4.9}
+  \node[blk=notif]  (b1) at (90:\rad)  {\RL{\textbf{טריגר}}\\ \RL{התראה, רטט, נקודה אדומה}};
+  \node[blk=notif]  (b2) at (45:\rad)  {\RL{\textbf{פעולה}}\\ \RL{פתיחת האפליקציה}};
+  \node[blk=sun]    (b3) at (0:\rad)   {\RL{\textbf{תגמול משתנה}}\\ \RL{לייק? הודעה? סרטון?}};
+  \node[blk=sun]    (b4) at (-45:\rad) {\RL{\textbf{השקעה}}\\ \RL{פוסט, תגובה, עוקבים}};
+  \node[blk=screen] (b5) at (-90:\rad) {\RL{\textbf{איסוף נתונים}}\\ \RL{כל גלילה נרשמת}};
+  \node[blk=screen] (b6) at (-135:\rad){\RL{\textbf{אלגוריתם}}\\ \RL{חיזוי מה יחזיק אותך}};
+  \node[blk=night]  (b7) at (180:\rad) {\RL{\textbf{פרסום ממוקד}}\\ \RL{הקשב נמכר למפרסם}};
+  \node[blk=night]  (b8) at (135:\rad) {\RL{\textbf{הכנסות}}\\ \RL{מימון פיצ'רים ממכרים}};
+
+  % חיצים במעגל
+  \foreach \a/\b in {b1/b2, b2/b3, b3/b4, b4/b5, b5/b6, b6/b7, b7/b8, b8/b1}
+    \draw[arr] (\a) to[bend left=12] (\b);
+  % חיצים מהמרכז
+  \foreach \b in {b1,b3,b5,b7}
+    \draw[-{Stealth}, dashed, draw=screen, line width=0.8pt] (core) -- (\b);
+
+  % מספרי שלבים
+  \foreach \b/\n/\c in {b1/1/notif, b2/2/notif, b3/3/sun, b4/4/sun,
+                        b5/5/screen, b6/6/screen, b7/7/night, b8/8/night}
+    \node[num=\c] at (\b.north east) {\n};
+\end{tikzpicture}
+\caption{מעגל כלכלת הקשב: שמונה שלבים שהופכים דקה של סקרנות לשעה של גלילה (עיבוד על בסיס מודל ה-\en{Hook} של \textcite{eyal2014} ו-\textcite{zuboff2019}).}
+\label{fig:attention-loop}
+\end{figure}

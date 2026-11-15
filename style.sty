@@ -1,0 +1,149 @@
+% ============================================================
+%  style.sty — העיצוב של הספר "מחוברים תמיד"
+%  פלטה: כחול-לילה (מסך כבוי) + טורקיז (מסך דולק) + אלמוג (התראה)
+% ============================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}[2026/11/15 Always Connected book style]
+
+% ---------- חבילות ----------
+% חשוב: polyglossia (שטוענת את bidi לכיוון ימין-לשמאל) חייבת להיטען *אחרי*
+% tikz, tcolorbox ו-hyperref. אחרת כל הגרפיקה נעלמת מה-PDF.
+\RequirePackage{fontspec}
+\RequirePackage[a4paper, top=2.6cm, bottom=2.4cm, inner=2.4cm, outer=2.4cm, headheight=28pt]{geometry}
+\RequirePackage{amsmath, amssymb}
+\RequirePackage{graphicx}
+\RequirePackage{booktabs, tabularx, array, colortbl}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes.geometric, calc, shadows}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage{fancyhdr}
+\RequirePackage{enumitem}
+\RequirePackage{caption}
+\RequirePackage{setspace}
+\RequirePackage[hidelinks]{hyperref}
+
+% ---------- שפות וגופנים (אחרי הגרפיקה!) ----------
+\RequirePackage{polyglossia}
+\setmainlanguage{hebrew}
+\setotherlanguage{english}
+\setmainfont{David}[Script=Hebrew, BoldFont=David Bold]
+\newfontfamily\hebrewfont{David}[Script=Hebrew, BoldFont=David Bold]
+\newfontfamily\hebrewfontsf{Gisha}[Script=Hebrew, BoldFont=Gisha Bold]
+\newfontfamily\headfont{Gisha}[Script=Hebrew, BoldFont=Gisha Bold]
+\newfontfamily\englishfont{Times New Roman}
+\setsansfont{Gisha}[Script=Hebrew, BoldFont=Gisha Bold]
+\RequirePackage{csquotes}
+\RequirePackage[backend=biber, style=apa]{biblatex}
+
+\setstretch{1.18}
+\setlength{\parskip}{0.45em}
+
+% ---------- צבעים ----------
+\definecolor{night}{HTML}{1B2A41}    % כחול-לילה: מסך כבוי
+\definecolor{screen}{HTML}{0FA3B1}   % טורקיז: מסך דולק
+\definecolor{notif}{HTML}{F25F5C}    % אלמוג: התראה
+\definecolor{sun}{HTML}{FFB238}      % צהוב: רעיון
+\definecolor{leaf}{HTML}{3BB273}     % ירוק: איזון
+\definecolor{paper}{HTML}{F5F7FA}
+\definecolor{ink}{HTML}{2E3440}
+\AtBeginDocument{\color{ink}}
+
+\hypersetup{colorlinks=true, linkcolor=night, citecolor=screen, urlcolor=screen}
+
+% ---------- כותרות פרקים ----------
+\titleformat{\chapter}[display]
+  {\headfont\color{night}}
+  {\begin{tikzpicture}
+     \node[fill=screen, text=white, rounded corners=6pt, minimum width=1.6cm,
+           minimum height=1.6cm, font=\headfont\bfseries\fontsize{34}{34}\selectfont]
+           {\thechapter};
+     \fill[notif] (0.95,0.95) circle (0.22);   % "נקודת התראה"
+   \end{tikzpicture}}
+  {0.6em}
+  {\bfseries\fontsize{28}{32}\selectfont}
+  [{\color{screen}\rule{\textwidth}{1.4pt}}]
+\titlespacing*{\chapter}{0pt}{-10pt}{22pt}
+
+\titleformat{\section}
+  {\headfont\Large\bfseries\color{night}}
+  {\color{screen}\thesection}{0.7em}{}
+\titleformat{\subsection}
+  {\headfont\large\bfseries\color{screen!80!night}}
+  {\thesubsection}{0.6em}{}
+
+% ---------- תוכן עניינים ----------
+\titlecontents{chapter}[0pt]
+  {\addvspace{0.9em}\headfont\bfseries\color{night}}
+  {\colorbox{screen}{\textcolor{white}{\makebox[1.4em]{\thecontentslabel}}}\hspace{0.7em}}
+  {}
+  {\titlerule*[0.6pc]{.}\contentspage}
+\titlecontents{section}[2.6em]
+  {\addvspace{0.15em}}
+  {\makebox[2.2em][r]{\thecontentslabel}\hspace{0.5em}}
+  {}
+  {\titlerule*[0.6pc]{.}\contentspage}
+
+% ---------- כותרות עמוד ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\headfont\small\color{screen}\leftmark}
+\fancyhead[L]{\headfont\small\color{night!60}מחוברים תמיד}
+\fancyfoot[C]{\tikz\node[circle, fill=night, text=white, inner sep=2pt,
+                 minimum size=1.5em, font=\headfont\small]{\thepage};}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{screen}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+  \fancyfoot[C]{\tikz\node[circle, fill=night, text=white, inner sep=2pt,
+                 minimum size=1.5em, font=\headfont\small]{\thepage};}}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+% ---------- תבליטים בעברית ----------
+\setlist[itemize,1]{label={\textcolor{screen}{\large$\bullet$}}, leftmargin=1.6em, itemsep=0.2em}
+\setlist[itemize,2]{label={\textcolor{notif}{$\triangleleft$}}}
+\setlist[enumerate,1]{label={\headfont\bfseries\textcolor{screen}{\arabic*.}}}
+% רשימת תיוג
+\newlist{checklist}{itemize}{1}
+\setlist[checklist]{label={\textcolor{leaf}{\Large$\square$}}, leftmargin=2em, itemsep=0.3em}
+
+% ---------- כיתובים ----------
+\captionsetup{font={small,sf}, labelfont={bf,color=screen}, labelsep=period}
+\captionsetup[table]{position=top}
+
+% ---------- תיבות מעוצבות ----------
+\tcbset{boxbase/.style={enhanced, breakable, sharp corners=northwest, arc=5pt,
+  boxrule=0pt, left=10pt, right=10pt, top=7pt, bottom=7pt,
+  fonttitle=\headfont\bfseries, coltitle=white}}
+
+% שאלה למחשבה
+\newtcolorbox{thinkbox}[1][שאלה למחשבה]{boxbase, colback=sun!10, colframe=sun,
+  borderline east={4pt}{0pt}{sun}, title={\textbf{?}~#1}, colbacktitle=sun!90!night}
+% נתון מפתח
+\newtcolorbox{factbox}[1][נתון מפתח]{boxbase, colback=screen!8, colframe=screen,
+  borderline east={4pt}{0pt}{screen}, title={#1}, colbacktitle=screen}
+% אזהרה / התראה
+\newtcolorbox{alertbox}[1][שימו לב]{boxbase, colback=notif!8, colframe=notif,
+  borderline east={4pt}{0pt}{notif}, title={!~#1}, colbacktitle=notif}
+% טיפ לאיזון
+\newtcolorbox{tipbox}[1][טיפ לאיזון]{boxbase, colback=leaf!9, colframe=leaf,
+  borderline east={4pt}{0pt}{leaf}, title={#1}, colbacktitle=leaf}
+% ציטוט פותח פרק
+\newtcolorbox{epigraph}[1]{enhanced, frame hidden, colback=paper,
+  borderline east={2pt}{0pt}{night!50}, left=12pt, right=12pt, fontupper=\large,
+  after upper={\if\relax\detokenize{#1}\relax\else\par\hfill\small\headfont\color{night!70}\textemdash~#1\fi}}
+% משוואה מודגשת
+\newtcolorbox{eqbox}[1][]{enhanced, colback=night!4, colframe=night, boxrule=0.8pt,
+  arc=4pt, title={#1}, fonttitle=\headfont\bfseries, colbacktitle=night}
+
+% טקסט אנגלי בשורה
+\newcommand{\en}[1]{\textenglish{#1}}
+
+% ---------- ציטוטים באנגלית בתוך טקסט עברי ----------
+% בלי זה, שמות מחברים באנגלית נשברים בין שורות בסדר מילים הפוך.
+\NewCommandCopy\origparencite\parencite
+\NewCommandCopy\origtextcite\textcite
+\RenewDocumentCommand\parencite{m}{\mbox{\textenglish{\origparencite{#1}}}}
+\RenewDocumentCommand\textcite{m}{\mbox{\textenglish{\origtextcite{#1}}}}
+\setlength{\emergencystretch}{3em}  % מאפשר לשורות להימתח סביב ציטוטים שאינם נשברים

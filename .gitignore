@@ -1,0 +1,21 @@
+# LaTeX build files (book.pdf is kept, main.pdf is not)
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+main.pdf
+_test*
+# Python
+__pycache__/
+
+# Word converter
+word/node_modules/
+word/diagram.pdf
