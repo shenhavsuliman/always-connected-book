@@ -1,0 +1,41 @@
+% stress-test.tex — עמוד בדיקה לתבנית (לפי Prompt B4 בחוברת)
+% מערבב עברית עם ביטויים באנגלית, עשרוניים, טווחים, אחוזים, מטבע, נוסחה עם עברית,
+% טבלה, תרשים TikZ, תיבת קוד ותיבה צבעונית. הידור מתיקיית הפרויקט:
+%   lualatex -output-directory=tests tests/stress-test.tex
+\documentclass{connected}
+\booktitle{מחוברים תמיד}\booksubtitle{טכנולוגיה וחיי היומיום}\englishtitle{Always Connected}\course{קורס בדיקה}
+\bookauthors{בדיקה}
+\addbibresource{refs.bib}
+\begin{document}
+\makecover
+\chapter{עמוד בדיקה}
+\section{טקסט מעורב 2.1}
+המודל \en{GPT-4 Turbo} רץ על \en{Azure OpenAI Service}. גרסה \num{1.0}, טווח \num{10--20},
+מחיר \num{1,500} ש"ח, ועלייה של \num{25\%}. בשנים \num{2005--2024} גדל מספר המשתמשים
+מ-\num{1.02} ל-\num{5.87} מיליארד \parencite{itu2026data}. מילים: \en{Input} (קלט) ו-\en{Output} (פלט).
+ציטוט טקסטואלי: \textcite{przybylski2017} מצאו שהשיא הוא \num{1:57} שעות.
+
+\begin{factbox}[תיבה עם \en{English} בכותרת]
+טקסט בעברית עם \en{TikTok} ו-\num{6:40} שעות ביום.
+\end{factbox}
+
+\begin{equation} P(\mathheb{רווחה} \mid t) = \beta_0 + \beta_1 t - \beta_2 t^2 \end{equation}
+
+\begin{table}[h]\centering\caption{טבלת בדיקה}
+\begin{tabular}{lll}\toprule
+\textbf{שנה} & \textbf{המצאה} & \textbf{הערה}\\\midrule
+\num{1844} & המברק & \en{"What hath God wrought"}\\
+\num{2007} & \en{iPhone} & \num{3} מוצרים\\\bottomrule
+\end{tabular}\end{table}
+
+\begin{center}\begin{ltrpicture}
+\node[draw=screen, fill=screen!10, rounded corners, text width=3cm, align=center] (a) at (4,0) {\heb{\textbf{שלב ראשון}}\\ \heb{התראה, רטט}};
+\node[draw=notif, fill=notif!10, rounded corners, text width=3cm, align=center] (b) at (0,0) {\heb{שלב שני}\\ \heb{פתיחת \en{App}}};
+\draw[-Stealth, thick] (a) -- (b);
+\end{ltrpicture}\end{center}
+
+\pythonfile[firstline=1, lastline=12]{python/make_graphs.py}{קוד בתיבה: כותרת בעברית}
+
+\begin{itemize}\item ראשון עם \en{Wi-Fi}\item שני \begin{enumerate}\item פנימי\end{enumerate}\end{itemize}
+\begin{otherlanguage}{english}\printbibliography[heading=none]\end{otherlanguage}
+\end{document}

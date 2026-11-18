@@ -90,36 +90,45 @@ def daily_time():
 
 
 # ------------------------------------------------------------------ 3
+# Hebrew labels live here, apart from the plotting code, so the function shown in the
+# book's appendix is plain left-to-right code (CODE-02: bidi scrambles Hebrew strings).
+LABELS = {
+    "phone": "סמארטפון", "games": "משחקי וידאו", "video": "סרטונים וטלוויזיה",
+    "pc": "מחשב (פנאי)", "peak": "שיא", "tstar": "נקודת המפנה = t*",
+    "above": "מעל השיא: כל שעה\nנוספת מורידה רווחה",
+    "xlabel": "שעות שימוש ביום חול (t)", "ylabel": "רווחה נפשית יחסית W(t)",
+    "title": "השערת גולדילוקס: לא מעט מדי ולא יותר מדי",
+    "note": "המחשה בלבד: העקומות בנויות כך שהשיא ייפול על נקודות המפנה "
+            "שדווחו (Przybylski & Weinstein, 2017); הגובה מנורמל",
+}
+
+
 def goldilocks():
-    # נקודות מפנה בימי חול (שעות), Przybylski & Weinstein 2017 (הודעת OII לעיתונות)
-    # הצורה הריבועית היא *המחשה* של המודל W(t) = b0 + b1*t - b2*t^2, לא הנתונים הגולמיים.
-    series = [("סמארטפון", 1 + 57 / 60, TEAL, "o"),
-              ("משחקי וידאו", 1 + 40 / 60, CORAL, "s"),
-              ("סרטונים וטלוויזיה", 3 + 41 / 60, INDIGO, "D"),
-              ("מחשב (פנאי)", 4 + 17 / 60, AMBER, "^")]
+    # Weekday tipping points t* in hours (Przybylski & Weinstein 2017, OII press release).
+    # The curves ILLUSTRATE W(t) = b0 + b1*t - b2*t^2. They are built to peak at t*
+    # and are normalized to height 1, so they show WHERE the peak is, not how big.
+    series = [("phone", 1 + 57 / 60, TEAL, "o"), ("games", 1 + 40 / 60, CORAL, "s"),
+              ("video", 3 + 41 / 60, INDIGO, "D"), ("pc", 4 + 17 / 60, AMBER, "^")]
     t = np.linspace(0, 8, 400)
     fig, ax = plt.subplots(figsize=(7.2, 4.0))
     ax.axhline(0, color=MUTED, lw=1)
-    for name, ts, c, mk in series:
-        # b1 = 2*b2*t*  →  W(t*) = 1 (מנורמל)
-        b2 = 1 / ts ** 2
-        w = 2 * b2 * ts * t - b2 * t ** 2
-        ax.plot(t, w, color=c, lw=2, label=he(f"{name} (שיא: {int(ts)}:{round((ts % 1) * 60):02d})"))
+    for key, ts, c, mk in series:
+        b2 = 1 / ts ** 2            # curvature (normalizes the peak height to 1)
+        b1 = 2 * b2 * ts            # dW/dt = b1 - 2*b2*t = 0  ->  peak at t = t*
+        w = b1 * t - b2 * t ** 2    # b0 = 0: the curves are relative
+        hhmm = f"{int(ts)}:{round((ts % 1) * 60):02d}"
+        ax.plot(t, w, color=c, lw=2, label=f"{LABELS[key]} ({LABELS['peak']}: {hhmm})")
         ax.plot([ts], [1], marker=mk, color=c, ms=9, mec="white", mew=2, zorder=4)
         ax.vlines(ts, -0.9, 1, color=c, lw=1, ls=(0, (3, 3)), alpha=0.8)
-    ax.text(0.15, 1.12, he("נקודת המפנה = t*"), color=INK, fontsize=10, fontweight="bold")
-    ax.text(5.6, -0.55, he("מעל השיא: כל שעה\nנוספת מורידה רווחה"), color=MUTED, fontsize=9.5, ha="center")
-    ax.set_xlim(0, 8)
-    ax.set_ylim(-0.9, 1.3)
-    ax.set_xlabel(he("שעות שימוש ביום חול (t)"))
-    ax.set_ylabel(he("רווחה נפשית יחסית W(t)"))
-    ax.set_yticks([])
+    ax.text(0.15, 1.12, LABELS["tstar"], color=INK, fontsize=10, fontweight="bold")
+    ax.text(5.6, -0.55, LABELS["above"], color=MUTED, fontsize=9.5, ha="center")
+    ax.set(xlim=(0, 8), ylim=(-0.9, 1.3), yticks=[])
+    ax.set_xlabel(LABELS["xlabel"])
+    ax.set_ylabel(LABELS["ylabel"])
     ax.grid(axis="y", visible=False)
     ax.legend(loc="lower left", frameon=False, fontsize=9.5)
-    ax.set_title(he("השערת גולדילוקס: לא מעט מדי ולא יותר מדי"), loc="right", color=INK,
-                 fontsize=13, fontweight="bold")
-    fig.text(0.99, -0.07, he("המחשה של המודל הריבועי; נקודות המפנה לפי Przybylski & Weinstein, 2017"),
-             ha="right", color=MUTED, fontsize=8.5)
+    ax.set_title(LABELS["title"], loc="right", color=INK, fontsize=13, fontweight="bold")
+    fig.text(0.99, -0.07, LABELS["note"], ha="right", color=MUTED, fontsize=8.5)
     fig.savefig(OUT / "goldilocks.png")
     plt.close(fig)
 

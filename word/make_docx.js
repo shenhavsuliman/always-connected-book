@@ -39,6 +39,9 @@ for (const m of rd("refs.bib").matchAll(/@(\w+)\{([^,]+),([\s\S]*?)\n\}/g)) {
   for (const fm of m[3].matchAll(/(\w+)\s*=\s*\{((?:[^{}]|\{[^{}]*\})*)\}/g)) f[fm[1].toLowerCase()] = fm[2].replace(/[{}]/g, "").trim();
   bib[m[2].trim()] = f;
 }
+// IEEE: אותו מספור כמו ב-PDF. הסדר נלקח מ-main.bbl שבנה biber (sorting=none)
+const citeOrder = [...rd("main.bbl").matchAll(/\\entry\{([^}]+)\}/g)].map((m) => m[1]);
+const ieee = (k) => citeOrder.indexOf(k) + 1 || "?";
 const surname = (a) => (a.includes(",") ? a.split(",")[0] : a.split(" ").slice(-1)[0]).trim();
 function citeName(k) {
   const e = bib[k]; if (!e) return k;
@@ -101,13 +104,13 @@ function parseInline(s, st = {}) {
       const [a, after] = has ? arg(j) : ["", j];
       flush();
       if (cmd === "textbf") out.push(...parseInline(a, { ...st, bold: true }));
-      else if (["en", "textenglish", "LR"].includes(cmd)) out.push(...parseInline(a, { ...st, latin: true }));
-      else if (["emph", "textit", "RL", "mbox", "text"].includes(cmd)) out.push(...parseInline(a, st));
-      else if (cmd === "parencite") out.push({ text: "(" + a.split(",").map((k) => `${citeName(k.trim())}, ${citeYear(k.trim())}`).join("; ") + ")", ...st, latin: true });
-      else if (cmd === "textcite") out.push({ text: a.split(",").map((k) => `${citeName(k.trim())} (${citeYear(k.trim())})`).join("; "), ...st, latin: true });
+      else if (["en", "textenglish", "LR", "num"].includes(cmd)) out.push(...parseInline(a, { ...st, latin: true }));
+      else if (["emph", "textit", "RL", "heb", "mathheb", "mbox", "text"].includes(cmd)) out.push(...parseInline(a, st));
+      else if (cmd === "parencite") out.push({ text: "[" + a.split(",").map((k) => ieee(k.trim())).join(", ") + "]", ...st, latin: true });
+      else if (cmd === "textcite") out.push({ text: a.split(",").map((k) => `${citeName(k.trim())} [${ieee(k.trim())}]`).join("; "), ...st, latin: true });
       else if (cmd === "ref") out.push({ text: labels[a] || "?", ...st });
       else if (cmd === "eqref") out.push({ text: `(${labels[a] || "?"})`, ...st });
-      else if (cmd === "label" || cmd === "index") { /* מושמט */ }
+      else if (["label", "index", "Needspace", "needspace", "allowbreak"].includes(cmd)) { /* מושמט */ }
       else if (cmd === "LaTeX") out.push({ text: "LaTeX", ...st, latin: true });
       else if (has) out.push(...parseInline(a, st)); // פקודה לא מוכרת: שומרים את התוכן
       i = has ? after : j; continue;
@@ -206,7 +209,7 @@ function table(body) {
   return [caption("טבלה", label, cap ? cap[1] : ""), t, new Paragraph({ children: [] })];
 }
 function figure(src) {
-  const cap = (/\\caption\{([\s\S]*)\}\s*\n\s*\\label/.exec(src) || [])[1] || "";
+  const cap = (/\\caption(?:\[[^\]]*\])?\{([\s\S]*)\}\s*\n\s*\\label/.exec(src) || [])[1] || "";
   const label = (/\\label\{([^}]+)\}/.exec(src) || [])[1];
   const g = /\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}/.exec(src);
   return [image(g ? g[1] : FIG_IMG[label.replace("fig:", "")]), caption("איור", label, cap)];
@@ -220,6 +223,19 @@ function equation(body) {
     children: [new TextRun({ text: mathText(tex), italics: true, size: 28, font: "Cambria Math" }),
                new TextRun({ text: label ? `        (${labels[label]})` : "", size: 22, font: LATIN })],
   });
+}
+function codeBox(opts, file, title) {
+  const src = rd(file).split(/\r?\n/);
+  const a = +((/firstline=(\d+)/.exec(opts) || [])[1] || 1), b = +((/lastline=(\d+)/.exec(opts) || [])[1] || src.length);
+  const head = new Paragraph({ bidirectional: true, keepNext: true, spacing: { before: 200, after: 0 },
+    shading: { type: ShadingType.CLEAR, color: "auto", fill: C.night },
+    children: runs(parseInline(title), { bold: true, color: "FFFFFF", font: HEAD, size: 20 }) });
+  const lines = src.slice(a - 1, b).map((line, i) => new Paragraph({
+    alignment: AlignmentType.LEFT, spacing: { after: 0, line: 240 },
+    shading: { type: ShadingType.CLEAR, color: "auto", fill: "F3F6F9" },
+    children: [new TextRun({ text: String(a + i).padStart(3) + "  ", font: "Courier New", size: 15, color: "9AA3AF" }),
+               new TextRun({ text: line || " ", font: "Courier New", size: 17 })] }));
+  return [head, ...lines, new Paragraph({ spacing: { after: 160 }, children: [] })];
 }
 function box(kind, title, body) {
   const b = BOX[kind];
@@ -278,7 +294,11 @@ function blocks(lines, base = {}) {
       flush(); const [body, e] = between(lines, i, m[1]); i = e; out.push(equation(body));
     } else if ((m = /^\\input\{(chapters\/figures\/[^}]+)\}/.exec(l))) {
       flush(); out.push(...figure(rd(m[1] + ".tex")));
-    } else if (/^\\(begin|end)\{(sloppypar|center|flushright)\}|^\\(markboth|addcontentsline|label|clearpage|newpage|vspace|medskip|bigskip|noindent)/.test(l)) {
+    } else if ((m = /^\\keywords\{(.*)\}/.exec(l))) {
+      flush(); out.push(para([{ text: "מילות מפתח: ", bold: true }, ...parseInline(m[1])], { color: C.screen }));
+    } else if ((m = /^\\pythonfile(?:\[([^\]]*)\])?\{([^}]+)\}\{(.*)\}/.exec(l))) {
+      flush(); out.push(...codeBox(m[1] || "", m[2], m[3]));
+    } else if (/^\\(begin|end)\{(sloppypar|center|flushright|otherlanguage)\}|^\\(markboth|addcontentsline|label|clearpage|newpage|vspace|medskip|bigskip|noindent)/.test(l)) {
       // עטיפות ופקודות פריסה: מדלגים
       if (/^\\label/.test(l) === false) continue;
     } else buf.push(l);
@@ -314,11 +334,12 @@ const toc = [
 const biblio = [
   new Paragraph({ heading: HeadingLevel.HEADING_1, bidirectional: true, pageBreakBefore: true,
     children: runs([{ text: "רשימת מקורות" }], { font: HEAD, size: 40, bold: true, color: C.night }) }),
-  ...Object.keys(bib).map(bibEntry).sort((a, b) => a.who.localeCompare(b.who)).map((e) => new Paragraph({
+  ...citeOrder.map(bibEntry).map((e, i) => new Paragraph({
     alignment: AlignmentType.LEFT, indent: { left: 720, hanging: 720 }, spacing: { after: 100 },
     children: [
-      new TextRun({ text: `${e.who} (${e.year}). `, font: LATIN, size: 21 }),
-      new TextRun({ text: `${e.title}. `, italics: true, font: LATIN, size: 21 }),
+      new TextRun({ text: `[${i + 1}]  ${e.who}, `, font: LATIN, size: 21 }),
+      new TextRun({ text: `“${e.title},” `, font: LATIN, size: 21 }),
+      new TextRun({ text: `${e.year}. `, font: LATIN, size: 21 }),
       new TextRun({ text: e.src ? `${e.src}. ` : "", font: LATIN, size: 21 }),
       new TextRun({ text: e.link, font: LATIN, size: 21, color: C.screen }),
     ],

@@ -63,16 +63,16 @@ def smart_home():
     fig, ax = plt.subplots(figsize=(9, 5.6), dpi=200)
     fig.patch.set_facecolor("white")
     # הבית
-    ax.add_patch(Polygon([[-3, -2.2], [3, -2.2], [3, 1.0], [0, 3.0], [-3, 1.0]],
+    ax.add_patch(Polygon([[-3.6, -2.75], [3.6, -2.75], [3.6, 1.0], [0, 3.0], [-3.6, 1.0]],
                          closed=True, fc="#F5F7FA", ec=NIGHT, lw=3, zorder=1))
     # הענן
     for cx, cy, rr in [(0, 4.35, 0.55), (-0.6, 4.15, 0.42), (0.62, 4.15, 0.45), (0.25, 4.65, 0.4)]:
         ax.add_patch(Circle((cx, cy), rr, fc=SCREEN, ec="none", alpha=0.9, zorder=2))
-    ax.text(0, 4.25, "Cloud", ha="center", va="center", color="white", fontsize=13,
+    ax.text(0, 4.25, "Cloud", ha="center", va="center", color="white", fontsize=16,
             fontweight="bold", zorder=3)
     # רכזת
     ax.add_patch(Circle((0, 0), 0.55, fc=NIGHT, ec=SCREEN, lw=3, zorder=4))
-    ax.text(0, 0, "Hub", ha="center", va="center", color="white", fontsize=12, fontweight="bold", zorder=5)
+    ax.text(0, 0, "Hub", ha="center", va="center", color="white", fontsize=15, fontweight="bold", zorder=5)
     ax.plot([0, 0], [0.55, 3.8], color=SCREEN, lw=2, ls="--", zorder=1)
     # מכשירים: (x, y, צבע, תווית, צורה)
     devices = [(-2.1, 1.1, SUN, "Smart\nlight"), (2.1, 1.1, NOTIF, "Camera"),
@@ -84,16 +84,16 @@ def smart_home():
         for k in (1, 2, 3):  # "גלי" Wi-Fi
             ax.add_patch(Circle((x, y), 0.32 + 0.12 * k, fc="none", ec=c, lw=1, alpha=0.35 / k, zorder=3))
         ax.add_patch(Circle((x, y), 0.32, fc=c, ec="white", lw=2, zorder=6))
-        ax.text(x, y - 0.62, lab, ha="center", va="top", fontsize=9, color=NIGHT, zorder=7)
+        ax.text(x, y - 0.62, lab, ha="center", va="top", fontsize=12, color=NIGHT, zorder=7)
     # בעלים עם סמארטפון
-    ax.add_patch(FancyBboxPatch((3.7, -0.7), 0.6, 1.1, boxstyle="round,pad=0.03,rounding_size=0.1",
+    ax.add_patch(FancyBboxPatch((4.2, -0.7), 0.6, 1.1, boxstyle="round,pad=0.03,rounding_size=0.1",
                                 fc=NIGHT, ec=SCREEN, lw=2, zorder=6))
-    ax.add_patch(Circle((4.25, 0.36), 0.09, color=NOTIF, zorder=7))
-    ax.annotate("", xy=(3.65, -0.15), xytext=(0.6, -0.1),
+    ax.add_patch(Circle((4.75, 0.36), 0.09, color=NOTIF, zorder=7))
+    ax.annotate("", xy=(4.15, -0.15), xytext=(0.6, -0.1),
                 arrowprops=dict(arrowstyle="<->", color=NIGHT, lw=1.5, ls=":"))
-    ax.text(4.0, -0.95, "You", ha="center", va="top", fontsize=10, fontweight="bold", color=NIGHT)
-    ax.set_xlim(-3.6, 4.7)
-    ax.set_ylim(-2.6, 5.2)
+    ax.text(4.5, -0.95, "You", ha="center", va="top", fontsize=14, fontweight="bold", color=NIGHT)
+    ax.set_xlim(-4.0, 5.2)
+    ax.set_ylim(-3.1, 5.2)
     ax.set_aspect("equal")
     ax.axis("off")
     fig.savefig(OUT / "smart_home.png", bbox_inches="tight", pad_inches=0.1)
