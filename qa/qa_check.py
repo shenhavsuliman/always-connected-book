@@ -69,6 +69,19 @@ def infra():
         if bad or cr > 0:
             add("infra", "FAIL", f"{f.name}: control characters {sorted(set(bad))[:4]} / lone CR x{cr} (INC-05)")
     add("infra", "PASS", f"scanned {len(src_files)} LaTeX sources for control characters")
+    # README / PRD / docs: every relative link and image must exist in the repository
+    for md in [ROOT / "README.md", ROOT / "PRD.md", ROOT / "PLAN.md", *(ROOT / "docs").glob("*.md")]:
+        if not md.exists():
+            continue
+        txt = md.read_text(encoding="utf-8")
+        links = re.findall(r"\]\(([^)#\s]+)", txt) + re.findall(r'src="([^"]+)"', txt)
+        for ln in links:
+            if ln.startswith(("http", "mailto")):
+                continue
+            target = (md.parent / ln).resolve()
+            if not target.exists():
+                add("infra", "FAIL", f"{md.name}: broken link -> {ln}")
+    add("infra", "PASS", "checked relative links and images in README/PRD/PLAN/docs")
 
 
 # ------------------------------------------------------------------ qa-cls-version

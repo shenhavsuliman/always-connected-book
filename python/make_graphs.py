@@ -24,6 +24,7 @@ INK, MUTED, GRID = "#2E3440", "#6B7280", "#E5E7EB"
 plt.rcParams.update({
     "font.family": ["Gisha", "Arial"],
     "font.size": 11,
+    "axes.titleweight": "bold", "axes.titlecolor": INK, "text.color": INK,
     "axes.edgecolor": GRID, "axes.labelcolor": MUTED,
     "xtick.color": MUTED, "ytick.color": MUTED,
     "axes.spines.top": False, "axes.spines.right": False,
@@ -104,31 +105,34 @@ LABELS = {
 
 
 def goldilocks():
-    # Weekday tipping points t* in hours (Przybylski & Weinstein 2017, OII press release).
-    # The curves ILLUSTRATE W(t) = b0 + b1*t - b2*t^2. They are built to peak at t*
-    # and are normalized to height 1, so they show WHERE the peak is, not how big.
-    series = [("phone", 1 + 57 / 60, TEAL, "o"), ("games", 1 + 40 / 60, CORAL, "s"),
-              ("video", 3 + 41 / 60, INDIGO, "D"), ("pc", 4 + 17 / 60, AMBER, "^")]
+    # Weekday tipping points t* (hours): Przybylski & Weinstein 2017.
+    # The curves ILLUSTRATE W(t) = b0 + b1*t - b2*t^2: built to peak
+    # at t*, height normalized to 1 (they show WHERE, not how big).
+    series = [("phone", 1 + 57 / 60, TEAL, "o"),
+              ("games", 1 + 40 / 60, CORAL, "s"),
+              ("video", 3 + 41 / 60, INDIGO, "D"),
+              ("pc", 4 + 17 / 60, AMBER, "^")]
     t = np.linspace(0, 8, 400)
     fig, ax = plt.subplots(figsize=(7.2, 4.0))
     ax.axhline(0, color=MUTED, lw=1)
     for key, ts, c, mk in series:
-        b2 = 1 / ts ** 2            # curvature (normalizes the peak height to 1)
-        b1 = 2 * b2 * ts            # dW/dt = b1 - 2*b2*t = 0  ->  peak at t = t*
-        w = b1 * t - b2 * t ** 2    # b0 = 0: the curves are relative
+        b2 = 1 / ts ** 2          # curvature: peak height = 1
+        b1 = 2 * b2 * ts          # dW/dt = b1 - 2*b2*t = 0 at t*
+        w = b1 * t - b2 * t ** 2  # b0 = 0: relative curves
         hhmm = f"{int(ts)}:{round((ts % 1) * 60):02d}"
-        ax.plot(t, w, color=c, lw=2, label=f"{LABELS[key]} ({LABELS['peak']}: {hhmm})")
-        ax.plot([ts], [1], marker=mk, color=c, ms=9, mec="white", mew=2, zorder=4)
-        ax.vlines(ts, -0.9, 1, color=c, lw=1, ls=(0, (3, 3)), alpha=0.8)
-    ax.text(0.15, 1.12, LABELS["tstar"], color=INK, fontsize=10, fontweight="bold")
-    ax.text(5.6, -0.55, LABELS["above"], color=MUTED, fontsize=9.5, ha="center")
+        tag = f"{LABELS[key]} ({LABELS['peak']}: {hhmm})"
+        ax.plot(t, w, color=c, lw=2, label=tag)
+        ax.plot([ts], [1], marker=mk, color=c, ms=9,
+                mec="white", mew=2, zorder=4)
+        ax.vlines(ts, -0.9, 1, color=c, lw=1, ls=(0, (3, 3)))
+    ax.text(0.15, 1.12, LABELS["tstar"], color=INK, fontsize=10)
+    ax.text(5.6, -0.55, LABELS["above"], color=MUTED, ha="center")
     ax.set(xlim=(0, 8), ylim=(-0.9, 1.3), yticks=[])
     ax.set_xlabel(LABELS["xlabel"])
     ax.set_ylabel(LABELS["ylabel"])
-    ax.grid(axis="y", visible=False)
     ax.legend(loc="lower left", frameon=False, fontsize=9.5)
-    ax.set_title(LABELS["title"], loc="right", color=INK, fontsize=13, fontweight="bold")
-    fig.text(0.99, -0.07, LABELS["note"], ha="right", color=MUTED, fontsize=8.5)
+    ax.set_title(LABELS["title"], loc="right", fontsize=13)
+    fig.text(0.99, -0.07, LABELS["note"], ha="right", fontsize=8.5)
     fig.savefig(OUT / "goldilocks.png")
     plt.close(fig)
 

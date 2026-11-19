@@ -7,5 +7,7 @@
   {"agent": "Fixer round 1", "skill": "qa-fixer", "model": "sonnet", "phase": "qa", "seconds": 1355, "tokens": 229154, "tools": 144, "date": "2026-11-18"},
   {"agent": "Detector round 2", "skill": "qa-super", "model": "sonnet", "phase": "qa", "seconds": 143, "tokens": 106394, "tools": 26, "date": "2026-11-18"},
   {"agent": "Red team", "skill": "red-team", "model": "sonnet", "phase": "qa", "seconds": 71, "tokens": 103321, "tools": 14, "date": "2026-11-18"},
-  {"agent": "Editor round 2", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 252, "tokens": 135577, "tools": 45, "date": "2026-11-18"}
+  {"agent": "Editor round 2", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 252, "tokens": 135577, "tools": 45, "date": "2026-11-18"},
+  {"agent": "Detector round 3", "skill": "qa-super", "model": "sonnet", "phase": "qa", "seconds": 110, "tokens": 106171, "tools": 25, "date": "2026-11-18"},
+  {"agent": "Proofreader", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 227, "tokens": 127613, "tools": 50, "date": "2026-11-19"}
 ]

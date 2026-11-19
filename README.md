@@ -8,7 +8,7 @@
 - **Python** לגרפים ולאיורים
 - **TikZ** לתרשימים
 
-את העבודה עשה **צוות של 9 סוכני AI**, ומעליהם סוכן Master. כל תיקון עבר דרך תבנית או Skill, ולא נגעו בטקסט ביד.
+את העבודה עשה **צוות של 8 תפקידי סוכנים** (ועדת מומחים, חוקר, כותב, עורך, מגיה, Detector, Fixer וצוות אדום), ומעליהם סוכן Master. כל תיקון עבר דרך תבנית או Skill, ולא נגעו בטקסט ביד.
 
 📕 **[book.pdf](book.pdf)**: הספר הסופי &nbsp;·&nbsp; 📋 **[PRD.md](PRD.md)** &nbsp;·&nbsp; 🗺️ **[PLAN.md](PLAN.md)** &nbsp;·&nbsp; ✅ **[TODO.md](TODO.md)** &nbsp;·&nbsp; 📝 [book.docx](book.docx) (גרסת Word לקריאה)
 
@@ -75,8 +75,12 @@
 |-----|----|-------|-----|
 | 1 | Detector | 0 קריטיים · 6 מהותיים · 10 קלים, **NOT READY** | [detector-round-1](qa/reports/detector-round-1.md) |
 | 1 | Fixer | 15 תוקנו, 1 פתוח (קל ומתועד). התבנית עלתה ל-v2.4.0 | [fixer-round-1](qa/reports/fixer-round-1.md) |
-| 2 | Detector | אימות של כל תיקון, וחיפוש נסיגות | [detector-round-2](qa/reports/detector-round-2.md) |
+| 2 | Detector | 15 תיקונים אומתו, 0 נסיגות. 1 מהותי ו-6 קלים חדשים | [detector-round-2](qa/reports/detector-round-2.md) |
 | — | red-team | 10 נקודות תורפה בתוכן ובטיעון | [red-team](qa/reports/red-team.md) |
+| 2 | עורך + Master | תיקון נקודות הצוות האדום בתוכן. התבנית עלתה ל-v2.5.0 | [editor-report](research/editor-report.md) |
+| 3 | Detector (שער סופי) | כל ממצאי סבב 2 אומתו, 0 נסיגות. 1 מהותי ו-3 קלים | [detector-round-3](qa/reports/detector-round-3.md) |
+| 3 | Master | כל ממצאי סבב 3 תוקנו. התבנית עלתה ל-v2.5.1 | [CHANGELOG](template/CHANGELOG.md) |
+| 4 | מגיה + Detector מחמיר | הגהה מלאה של העברית, וסימולציה של בודק קפדני | [detector-round-4](qa/reports/detector-round-4.md) |
 
 **חוק הברזל:** כל תיקון שחוזר בכמה מקומות בספר בוצע ב-[connected.cls](connected.cls), ו**הגרסה עלתה**. היסטוריית הגרסאות נמצאת ב-[CHANGELOG](template/CHANGELOG.md). כשה-Detector מצא תקלה שהבודק האוטומטי פספס, הבודק עצמו ([qa/qa_check.py](qa/qa_check.py)) תוקן כדי שיתפוס אותה בפעם הבאה.
 

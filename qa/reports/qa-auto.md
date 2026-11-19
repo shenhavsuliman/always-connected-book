@@ -16,6 +16,7 @@
 | infra | PASS | stray or undocumented files in root: none |
 | infra | PASS | required file connected.lua |
 | infra | PASS | scanned 17 LaTeX sources for control characters |
+| infra | PASS | checked relative links and images in README/PRD/PLAN/docs |
 | cls-version | PASS | connected.cls v2.5.1 (standard: v2.5.1) |
 | cls-version | PASS | CHANGELOG entry for v2.5.1 |
 | typeset | PASS | 0 LaTeX errors [] |
@@ -51,11 +52,11 @@
 | code | PASS | listing source python/make_graphs.py exists |
 | code | PASS | python/make_graphs.py: lines > 95 chars (wrap risk): [] |
 | code | PASS | python/make_graphs.py: Hebrew text (comments or strings) inside listing: [] |
-| code | PASS | python/make_graphs.py: listing is 28 lines (box is unbreakable, max ~38) |
+| code | PASS | python/make_graphs.py: listing is 31 lines (box is unbreakable, max ~38) |
 | code | PASS | python/make_graphs.py: first source line of the range appears in the PDF ('def goldilocks():') |
 | code | PASS | python/make_graphs.py: last source line of the range appears in the PDF ('plt.close(fig)') |
 | code | PASS | text lines running past the page margins: pdf pages [] |
 | code | PASS | pythonbox has its own background (codebg) |
 | code | PASS | pythonbox is built inside an English (LTR) environment |
 
-**Total: 0 FAIL, 0 WARN, 55 PASS**
+**Total: 0 FAIL, 0 WARN, 56 PASS**
