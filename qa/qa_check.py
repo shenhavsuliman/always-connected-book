@@ -17,7 +17,7 @@ import pymupdf
 
 ROOT = Path(__file__).resolve().parent.parent
 PDF, LOG, CLS = ROOT / "main.pdf", ROOT / "main.log", ROOT / "connected.cls"
-REQUIRED_CLS = "2.5.2"            # the "standard" template version (qa-cls-version)
+REQUIRED_CLS = "2.5.3"            # the "standard" template version (qa-cls-version)
 HEB = "\u0590-\u05FF"
 FINALS = "ךםןףץ"
 
@@ -245,6 +245,15 @@ def img():
     log = LOG.read_text(encoding="utf-8", errors="ignore")
     floats = re.findall(r"Float too large for page", log)
     add("img", "WARN" if floats else "PASS", f"{len(floats)} 'float too large' warnings")
+    # IMG-04 / QA-04 (round 5): make_graphs.py checks every graph before saving it (legend or
+    # label covering drawn curve points, labels overlapping each other) -> images/overlap-report.json
+    import json
+    ov = ROOT / "images" / "overlap-report.json"
+    if not ov.exists():
+        add("img", "FAIL", "images/overlap-report.json missing: run python/make_graphs.py")
+    else:
+        for png, found in json.loads(ov.read_text(encoding="utf-8")).items():
+            add("img", "FAIL" if found else "PASS", f"{png}: label/legend overlaps {found or 'none'}")
     # IMG-01: a page whose only content is a figure/table plus caption and that is mostly empty.
     # The last page of a chapter is exempt (the next page starts with a chapter heading).
     doc = pymupdf.open(PDF)

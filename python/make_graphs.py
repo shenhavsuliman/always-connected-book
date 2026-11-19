@@ -29,7 +29,7 @@ plt.rcParams.update({
     "xtick.color": MUTED, "ytick.color": MUTED,
     "axes.spines.top": False, "axes.spines.right": False,
     "axes.grid": True, "grid.color": GRID, "grid.linewidth": 0.8,
-    "savefig.dpi": 220, "savefig.bbox": "tight",
+    "savefig.dpi": 220, "savefig.bbox": "tight", "legend.frameon": False, "legend.fontsize": 9.5,
 })
 
 
@@ -51,7 +51,7 @@ def internet_users():
     for x, y, lab in [(2005, 1.02, "1.02"), (2015, 2.96, "2.96"), (2024, 5.87, "5.87")]:
         ax.annotate(lab, (x, y), xytext=(0, 10), textcoords="offset points",
                     ha="center", color=INK, fontsize=11, fontweight="bold")
-    ax.annotate(he("הקפיצה של הקורונה"), xy=(2020, 4.72), xytext=(2012.2, 4.9),
+    ax.annotate(he("2020: שנת הקורונה"), xy=(2020, 4.72), xytext=(2012.2, 4.9),
                 color=MUTED, fontsize=10, ha="center",
                 arrowprops=dict(arrowstyle="->", color=MUTED, lw=1))
     ax.set_ylabel(he("מיליארדי משתמשים"))
@@ -95,7 +95,7 @@ def daily_time():
 # book's appendix is plain left-to-right code (CODE-02: bidi scrambles Hebrew strings).
 LABELS = {
     "phone": "סמארטפון", "games": "משחקי וידאו", "video": "סרטונים וטלוויזיה",
-    "pc": "מחשב (פנאי)", "peak": "שיא", "tstar": "נקודת המפנה = t*",
+    "pc": "מחשב (פנאי)", "peak": "שיא", "tstar": "קווים מקווקווים: נקודות המפנה",
     "above": "מעל השיא: כל שעה\nנוספת מורידה רווחה",
     "xlabel": "שעות שימוש ביום חול (t)", "ylabel": "רווחה נפשית יחסית W(t)",
     "title": "השערת גולדילוקס: לא מעט מדי ולא יותר מדי",
@@ -130,15 +130,53 @@ def goldilocks():
     ax.set(xlim=(0, 8), ylim=(-0.9, 1.3), yticks=[])
     ax.set_xlabel(LABELS["xlabel"])
     ax.set_ylabel(LABELS["ylabel"])
-    ax.legend(loc="lower left", frameon=False, fontsize=9.5)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=2)
     ax.set_title(LABELS["title"], loc="right", fontsize=13)
-    fig.text(0.99, -0.07, LABELS["note"], ha="right", fontsize=8.5)
+    fig.text(0.99, -0.2, LABELS["note"], ha="right", fontsize=8.5)
     fig.savefig(OUT / "goldilocks.png")
     plt.close(fig)
 
 
+def overlap_findings(fig):
+    """QA-04 / IMG-04: report a legend or text label that covers a plotted curve or point,
+    or two labels that overlap each other. Runs on every figure before it is saved."""
+    import itertools
+    fig.canvas.draw()
+    r = fig.canvas.get_renderer()
+    found = []
+    for ax in fig.axes:
+        # legend: 12px margin (RTL text can render wider than measured). Text labels: 2px,
+        # and an annotation's arrow is excluded (it is meant to touch the point it labels).
+        from matplotlib.text import Text
+        boxes = [("legend", ax.get_legend().get_window_extent(r).padded(12))] if ax.get_legend() else []
+        boxes += [(f"text '{t.get_text()[:25]}'", Text.get_window_extent(t, r).padded(2))
+                  for t in ax.texts if t.get_text()]
+        pts = np.vstack([ln.get_transform().transform(ln.get_xydata()) for ln in ax.lines
+                         if len(ln.get_xydata())] or [np.empty((0, 2))])
+        ab = ax.get_window_extent(r)          # only points that are drawn (not clipped away)
+        pts = pts[(pts[:, 0] >= ab.x0) & (pts[:, 0] <= ab.x1) & (pts[:, 1] >= ab.y0) & (pts[:, 1] <= ab.y1)]
+        for name, bb in boxes:
+            inside = ((pts[:, 0] > bb.x0) & (pts[:, 0] < bb.x1) & (pts[:, 1] > bb.y0) & (pts[:, 1] < bb.y1)).sum()
+            if inside:
+                found.append(f"{name} covers {inside} curve points")
+        for (n1, b1), (n2, b2) in itertools.combinations(boxes, 2):
+            if b1.overlaps(b2):
+                found.append(f"{n1} overlaps {n2}")
+    return found
+
+
 if __name__ == "__main__":
+    import json
+    from matplotlib.figure import Figure
+    report = {}
+    _save = Figure.savefig
+
+    def checked_save(self, fname, *a, **k):  # every graph is checked before it is written
+        report[Path(fname).name] = overlap_findings(self)
+        return _save(self, fname, *a, **k)
+    Figure.savefig = checked_save
     internet_users()
     daily_time()
     goldilocks()
-    print("graphs written to", OUT)
+    (OUT / "overlap-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("graphs written to", OUT, "| overlaps:", {k: len(v) for k, v in report.items()})

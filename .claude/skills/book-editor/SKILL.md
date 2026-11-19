@@ -14,5 +14,6 @@ description: Editor/reviewer agent for the "Always Connected" book — fact-chec
 3. **Requirements:** walk through the PRD criteria (`docs/expert-committee.md`) and confirm each against the actual PDF.
 
 ## Rules
+- **Cite the actual source (INC-24):** when `facts.md` says "source: X" (for example a press release, not the paper), the citation in the text must be X. Add X to `refs.bib` if it's missing.
 - Surgical edits only, in `chapters/*.tex`. Never change `connected.cls`. Report template issues to the Master instead.
 - Write `research/editor-report.md`: a requirements table, the changes made, open issues (critical or minor), and a score out of 10.
