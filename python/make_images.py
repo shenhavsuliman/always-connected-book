@@ -77,7 +77,9 @@ def smart_home():
     # מכשירים: (x, y, צבע, תווית, צורה)
     devices = [(-2.1, 1.1, SUN, "Smart\nlight"), (2.1, 1.1, NOTIF, "Camera"),
                (-2.2, -1.3, LEAF, "Thermostat"), (2.2, -1.3, SCREEN, "Speaker"),
-               (-0.9, -1.75, NOTIF, "Smart\nlock"), (0.95, -1.75, SUN, "Fridge"),
+               # IMG-03: one-line "Lock" label, bottom row raised, so no label crosses
+               # the wall or touches "Thermostat"
+               (-0.75, -1.45, NOTIF, "Lock"), (0.8, -1.45, SUN, "Fridge"),
                (-1.15, 1.85, LEAF, "Plug"), (1.15, 1.85, SCREEN, "TV")]
     for x, y, c, lab in devices:
         ax.plot([0, x], [0, y], color=c, lw=1.6, alpha=0.7, zorder=3)
