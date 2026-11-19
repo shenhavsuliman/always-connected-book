@@ -14,12 +14,12 @@
 ## 2. דרישות סף (מהגדרת המטלה)
 | # | דרישה | מימוש | בדיקה |
 |---|-------|-------|-------|
-| R1 | 15 עמודים לפחות, עברית ואנגלית | 33 עמודים | `qa-infra` |
+| R1 | 15 עמודים לפחות, עברית ואנגלית | 32 עמודים | `qa-infra` |
 | R2 | LuaLaTeX (MiKTeX) | `build.sh` | `qa-typeset` |
-| R3 | תבנית `.cls` | `connected.cls` v2.5.1 + CHANGELOG + COMMANDS | `qa-cls-version` |
+| R3 | תבנית `.cls` | `connected.cls` v2.5.2 + CHANGELOG + COMMANDS | `qa-cls-version` |
 | R4 | `main.tex` וקובץ `.tex` לכל פרק | `chapters/00`–`09` | `qa-infra` |
 | R5 | PRD, PLAN, TODO, README | בשורש | `qa-infra` |
-| R6 | תוכן עניינים, פרקים, ביבליוגרפיה IEEE | `biblatex-ieee`, 16 מקורות | `qa-typeset` |
+| R6 | תוכן עניינים, פרקים, ביבליוגרפיה IEEE | `biblatex-ieee`, 19 מקורות | `qa-typeset` |
 | R7 | תמונה, טבלה, נוסחה | 5 איורים, 2 טבלאות, 2 משוואות ממוספרות | `qa-img`, `qa-table` |
 | R8 | גרפים בקוד Python | 3 גרפים ב-`make_graphs.py` | `qa-img` |
 | R9 | Footer + Banner מקצועיים | באנר כחול-לילה ושורה תחתונה "עמוד N מתוך M" | ויזואלי |
@@ -59,7 +59,7 @@
 | 7. איזון דיגיטלי | `07-balance.tex` | רשימת תיוג |
 | 8. סיכום | `08-summary.tex` | — |
 | נספח א | `09-appendix-code.tex` | תיבת קוד `pythonbox` |
-| מקורות | IEEE | 16 רשומות |
+| מקורות | IEEE | 19 רשומות |
 
 ## 5. ארכיטקטורת הסוכנים
 | סוכן | Skill | מודל | תפקיד |
@@ -67,8 +67,9 @@
 | Master | — | Opus | ניהול, תבנית, גרפים, אינטגרציה |
 | ועדת מומחים | `prompts/04-expert-committee.md` | Sonnet | קריטריונים ל-PRD |
 | חוקר | `book-researcher` | Sonnet | מקורות ונתונים מאומתים |
-| כותב | `book-writer` | Opus | 9 פרקים בסגנון הררי |
+| כותב | `book-writer` | Opus | 8 פרקים ותקציר בסגנון הררי |
 | עורך | `book-editor` | Opus | עובדות, שפה ודרישות |
+| מגיה | `book-editor` + `prompts/08-proofreader.md` | Opus | הגהה מלאה ומילון מונחים |
 | Detector | `qa-super` + 7 סקילים | Sonnet | מגלה תקלות ואינו מתקן |
 | Fixer | `qa-fixer` | Sonnet | מתקן במקום הנכון |
 | צוות אדום | `red-team` | Sonnet, בשיחה נפרדת | 10 נקודות התורפה |

@@ -4,7 +4,7 @@
 
 ## תשתית ותבנית
 - ✅ תיקיית פרויקט ו-Repository ציבורי חדש (Master)
-- ✅ `connected.cls` v2.5.1 ל-LuaLaTeX, עם babel ו-`bidi=basic` (Master + Fixer)
+- ✅ `connected.cls` v2.5.2 ל-LuaLaTeX, עם babel ו-`bidi=basic` (Master + Fixer)
 - ✅ `template/CHANGELOG.md` ו-`template/COMMANDS.md`
 - ✅ עמוד בדיקה `tests/stress-test.tex`, ו-`bash build.sh test`
 - ✅ `build.sh`: בנייה בפקודה אחת
@@ -12,18 +12,18 @@
 ## תיעוד
 - ✅ ועדת מומחים: `docs/expert-committee.md`
 - ✅ `PRD.md` גרסה 2, `PLAN.md` ו-`TODO.md`
-- ✅ 16 חקרי אירוע: `docs/incidents.md`
+- ✅ 21 חקרי אירוע: `docs/incidents.md`
 - ✅ README עם צילומים וגרף "צוות הסוכנים בפעולה"
 
 ## תוכן
-- ✅ 16 מקורות ו-`facts.md` (חוקר)
-- ✅ 9 פרקים ונספח קוד (כותב + Master)
+- ✅ 19 מקורות ו-`facts.md` (חוקר)
+- ✅ 8 פרקים, תקציר ונספח קוד (כותב + Master)
 - ✅ עריכה, סבב 1: 19 תיקונים (עורך)
 - ✅ עריכה, סבב 2: תיקון נקודות הצוות האדום (עורך)
 - ✅ 3 גרפים ו-2 איורים מקוד
 
 ## בקרת איכות
-- ✅ 14 Skills ב-`.claude/skills/`, ו-`qa/qa_check.py`
+- ✅ 13 Skills ב-`.claude/skills/`, ו-`qa/qa_check.py`
 - ✅ Detector סבב 1: 16 ממצאים
 - ✅ Fixer סבב 1: 15 תוקנו
 - ✅ Detector סבב 2: אימות. 15 אומתו, 0 נסיגות

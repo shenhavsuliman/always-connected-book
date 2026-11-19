@@ -17,8 +17,10 @@
 | infra | PASS | required file connected.lua |
 | infra | PASS | scanned 17 LaTeX sources for control characters |
 | infra | PASS | checked relative links and images in README/PRD/PLAN/docs |
-| cls-version | PASS | connected.cls v2.5.1 (standard: v2.5.1) |
-| cls-version | PASS | CHANGELOG entry for v2.5.1 |
+| infra | PASS | skill-count claims checked against 13 skills |
+| cls-version | PASS | connected.cls v2.5.2 (standard: v2.5.2) |
+| cls-version | PASS | CHANGELOG entry for v2.5.2 |
+| typeset | PASS | boxes are unbreakable (no split box without a title) |
 | typeset | PASS | 0 LaTeX errors [] |
 | typeset | PASS | 0 undefined refs/cites [] |
 | typeset | PASS | 0 overfull hbox > 5pt: [] |
@@ -26,7 +28,7 @@
 | typeset | PASS | 0 underfull hbox: [] |
 | typeset | PASS | 0 package warnings not in known-warnings.md: [] |
 | typeset | PASS | footer numeral systems checked on every page |
-| bidi | PASS | scanned 33 pages for reversed words, glued ranges, mirrored brackets |
+| bidi | PASS | scanned 32 pages for reversed words, glued ranges, mirrored brackets, split prefixes |
 | bidi | PASS | ':' or ';' set in font David (mis-spaced punctuation), pages [] |
 | table | PASS | 2 tables in chapters |
 | table | PASS | table 1: caption above the table |
@@ -59,4 +61,4 @@
 | code | PASS | pythonbox has its own background (codebg) |
 | code | PASS | pythonbox is built inside an English (LTR) environment |
 
-**Total: 0 FAIL, 0 WARN, 56 PASS**
+**Total: 0 FAIL, 0 WARN, 58 PASS**

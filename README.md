@@ -3,7 +3,7 @@
 # 📱 מחוברים תמיד: טכנולוגיה וחיי היומיום
 ### *Always Connected: Technology and Everyday Life*
 
-ספר מקצועי בעברית ואנגלית משולבת, ברמת הוצאה לאור, 33 עמודים. הוא הופק כולו בקוד:
+ספר מקצועי בעברית ואנגלית משולבת, ברמת הוצאה לאור, 32 עמודים. הוא הופק כולו בקוד:
 - **LuaLaTeX**, עם תבנית `.cls` משלי
 - **Python** לגרפים ולאיורים
 - **TikZ** לתרשימים
@@ -50,7 +50,7 @@
 ┌────────┐   ┌─────────┐    ┌──────────┐   ┌──────────┐          ┌──────────────────────────────┐
 │ ועדת   │   │ חוקר    │──▶│ כותב      │──▶│ עורך      │──────▶  │    לולאת "צוות אדום"           │
 │ מומחים │   │ Sonnet  │    │ Opus     │   │ Opus     │          │ Detector ──▶ Fixer ──▶ Detector │
-│ →PRD   │   │ 16 מקורות│    │ 9 פרקים  │   │ 19 תיקונים│          │ (qa-super)  (qa-fixer) (אימות) │
+│ →PRD   │   │ 19 מקורות│    │ 8 פרקים  │   │ 19 תיקונים│          │ (qa-super)  (qa-fixer) (אימות) │
 └────────┘   └─────────┘    └──────────┘   └──────────┘          │        + red-team (בוחן)      │
                                                                   └──────────────────────────────┘
 ```
@@ -58,14 +58,16 @@
 | סוכן | Skill | מודל | מה עשה |
 |------|-------|------|--------|
 | **ועדת מומחים** | [04-expert-committee](prompts/04-expert-committee.md) | Sonnet | 5 מומחים, 28 קריטריוני קבלה מדידים, והם הבסיס ל-PRD ([docs/expert-committee.md](docs/expert-committee.md)) |
-| **חוקר** | [book-researcher](.claude/skills/book-researcher/SKILL.md) | Sonnet | 16 מקורות אמיתיים, וגיליון עובדות שמסמן מה **לא** אומת |
-| **כותב** | [book-writer](.claude/skills/book-writer/SKILL.md) | Opus | 9 פרקים בסגנון הררי, רק עם נתונים מאומתים |
-| **עורך** | [book-editor](.claude/skills/book-editor/SKILL.md) | Opus | 19 תיקוני עובדות ושפה, וציון 7.5/10 |
+| **חוקר** | [book-researcher](.claude/skills/book-researcher/SKILL.md) | Sonnet | 19 מקורות אמיתיים, וגיליון עובדות שמסמן מה **לא** אומת |
+| **כותב** | [book-writer](.claude/skills/book-writer/SKILL.md) | Opus | 8 פרקים ותקציר בסגנון הררי, רק עם נתונים מאומתים |
+| **עורך** | [book-editor](.claude/skills/book-editor/SKILL.md) | Opus | 19 תיקוני עובדות ושפה וציון 7.5/10; בסבבים 2 ו-4 תיקן את ממצאי התוכן |
+| **מגיה** | [book-editor](.claude/skills/book-editor/SKILL.md) ([08-proofreader](prompts/08-proofreader.md)) | Opus | הגהה מלאה: 33 תיקוני דקדוק, סגנון וכיוון, ומילון מונחים אחיד |
 | **Detector** | [qa-super](.claude/skills/qa-super/SKILL.md) + 7 סקילים | Sonnet | מגלה תקלות ואינו מתקן |
 | **Fixer** | [qa-fixer](.claude/skills/qa-fixer/SKILL.md) | Sonnet | מתקן במקום הנכון: תבנית, סקיל או שורה בודדת |
 | **צוות אדום** | [red-team](.claude/skills/red-team/SKILL.md) | Sonnet | מחפש את 10 נקודות התורפה של הספר, בלי מחמאות |
 
-**ניהול משאבים:** משימות של חיפוש ובדיקה רצו על Sonnet, שזול יותר. כתיבה ועריכה בעברית רצו על Opus. כל הסוכנים רצו ברקע, במקביל לעבודת ה-Master.
+**ניהול משאבים:** משימות של חיפוש ובדיקה רצו על Sonnet, שזול יותר. כתיבה, עריכה, הגהה והבודק המחמיר רצו על Opus. כל הסוכנים רצו ברקע, במקביל לעבודת ה-Master.
+**סך הכול:** 13 ריצות סוכנים וכ-1.69 מיליון טוקנים. מתוכם כ-857 אלף ב-Sonnet וכ-837 אלף ב-Opus (לא כולל את ה-Master). הנתונים המלאים ב-[docs/agent-runs.json](docs/agent-runs.json).
 
 ---
 
@@ -78,21 +80,23 @@
 | 2 | Detector | 15 תיקונים אומתו, 0 נסיגות. 1 מהותי ו-6 קלים חדשים | [detector-round-2](qa/reports/detector-round-2.md) |
 | — | red-team | 10 נקודות תורפה בתוכן ובטיעון | [red-team](qa/reports/red-team.md) |
 | 2 | עורך + Master | תיקון נקודות הצוות האדום בתוכן. התבנית עלתה ל-v2.5.0 | [editor-report](research/editor-report.md) |
-| 3 | Detector (שער סופי) | כל ממצאי סבב 2 אומתו, 0 נסיגות. 1 מהותי ו-3 קלים | [detector-round-3](qa/reports/detector-round-3.md) |
+| 3 | Detector (שער סופי) | כל ממצאי סבב 2 אומתו, 0 נסיגות. 1 מהותי ו-4 קלים | [detector-round-3](qa/reports/detector-round-3.md) |
 | 3 | Master | כל ממצאי סבב 3 תוקנו. התבנית עלתה ל-v2.5.1 | [CHANGELOG](template/CHANGELOG.md) |
-| 4 | מגיה + Detector מחמיר | הגהה מלאה של העברית, וסימולציה של בודק קפדני | [detector-round-4](qa/reports/detector-round-4.md) |
+| 4 | מגיה | הגהה מלאה: 33 תיקוני דקדוק, סגנון וכיוון | [editor-report](research/editor-report.md) |
+| 4 | Detector מחמיר (Opus) | סימולציה של בודק לציון 100: **82/100**, 9 מהותיים ו-20 קלים | [detector-round-4](qa/reports/detector-round-4.md) |
+| 4 | Fixer (עורך + Master) | 27 תוקנו ו-2 נשארו בהחלטה מנומקת. תבנית v2.5.2, ו-5 בדיקות אוטומטיות חדשות | [fixer-round-4](qa/reports/fixer-round-4.md) |
 
 **חוק הברזל:** כל תיקון שחוזר בכמה מקומות בספר בוצע ב-[connected.cls](connected.cls), ו**הגרסה עלתה**. היסטוריית הגרסאות נמצאת ב-[CHANGELOG](template/CHANGELOG.md). כשה-Detector מצא תקלה שהבודק האוטומטי פספס, הבודק עצמו ([qa/qa_check.py](qa/qa_check.py)) תוקן כדי שיתפוס אותה בפעם הבאה.
 
 ### 🔍 חקרי אירוע
-לכל תקלה נשאלו שתי שאלות: **למה היא קרתה**, ו**למה היא לא התגלתה קודם**. מהתשובות נגזר מנגנון המניעה. **16 חקרי אירוע** נמצאים ב-[docs/incidents.md](docs/incidents.md), ומתוכם, למשל:
+לכל תקלה נשאלו שתי שאלות: **למה היא קרתה**, ו**למה היא לא התגלתה קודם**. מהתשובות נגזר מנגנון המניעה. **21 חקרי אירוע** נמצאים ב-[docs/incidents.md](docs/incidents.md), ומתוכם, למשל:
 - **INC-05:** סקריפט Python כתב `\r`, `\f` ו-`\b` כתווי בקרה בקובצי LaTeX, **שלוש פעמים**. הלקח נשאר הערה בפרומפט ולא הפך לבדיקה, ולכן לא נעצר. עכשיו `qa-infra` סורק כל קובץ.
 - **INC-11:** הגרסה הראשונה נבנתה לפי תמלול משובש של השיעור, עם XeLaTeX ו-APA, במקום המסמך הרשמי (LuaLaTeX ו-IEEE). העורך בדק את הספר **מול אותו PRD שגוי**, ולכן לא תפס את הטעות.
 - **INC-13:** "אזהרה מוכרת" הסתירה דליפת קוד. **אזהרה שמסבירים אותה לפני שבודקים היא תקלה מוסתרת.**
 
 ---
 
-## 🧰 ה-Skills (14)
+## 🧰 ה-Skills (13)
 
 | Skill | תפקיד |
 |-------|-------|
@@ -117,7 +121,7 @@
 **דרישות:**
 - MiKTeX עם LuaLaTeX ו-biber
 - Python 3 עם `matplotlib>=3.11 numpy pymupdf`
-- גופני Windows: Times New Roman, Gisha, Courier New
+- גופני Windows: Times New Roman, Gisha, Segoe UI, Courier New
 
 ```bash
 bash build.sh          # גרפים → lualatex → biber → lualatex ×2 → book.pdf
@@ -129,14 +133,14 @@ python qa/qa_check.py  # הבדיקות האוטומטיות של כל משפח�
 ```
 latex-book/
 ├── main.tex                    ← הקובץ הראשי
-├── connected.cls  connected.lua ← התבנית (v2.5.1) ועזר Lua לתיבות הקוד
-├── refs.bib                    ← 16 מקורות (IEEE)
+├── connected.cls  connected.lua ← התבנית (v2.5.2) ועזר Lua לתיבות הקוד
+├── refs.bib                    ← 19 מקורות (IEEE)
 ├── chapters/                   ← תקציר, 8 פרקים, נספח קוד, figures/
 ├── python/                     ← make_graphs · make_images · make_agents_chart · render_pages
 ├── images/                     ← כל האיורים, מקוד בלבד
 ├── template/                   ← CHANGELOG.md · COMMANDS.md
 ├── tests/stress-test.tex       ← עמוד בדיקה לתבנית (Prompt B4 בחוברת)
-├── .claude/skills/             ← 14 Skills
+├── .claude/skills/             ← 13 Skills
 ├── qa/                         ← qa_check.py · known-warnings.md · reports/
 ├── prompts/                    ← כל הפרומפטים לסוכנים
 ├── research/                   ← facts.md · editor-report.md

@@ -8,7 +8,7 @@
 | 2 | ועדת מומחים ו-PRD | ועדה (Sonnet) ו-Master | `docs/expert-committee.md`, `PRD.md` | 28 קריטריונים, לכל אחד דרך בדיקה |
 | 3 | תוכנית עבודה | Master | `PLAN.md` (הקובץ הזה) | — |
 | 4 | רשימת משימות | Master | `TODO.md` | כל משימה עם בעלים ומצב |
-| 5 | תבנית ו-Skills | Master | `connected.cls`, `.claude/skills/` (14 סקילים), `qa/qa_check.py` | `tests/stress-test.tex` עובר |
+| 5 | תבנית ו-Skills | Master | `connected.cls`, `.claude/skills/` (13 סקילים), `qa/qa_check.py` | `tests/stress-test.tex` עובר |
 | 6 | תוכן | חוקר, כותב, עורך | `refs.bib`, `facts.md`, `chapters/*.tex` | עורך: ציון 7.5 ומעלה, 0 בעיות קריטיות |
 | 7 | הרצה, בדיקה ותיקון: צוות אדום | Detector, Fixer, Detector, red-team | `qa/reports/*` | Detector: `READY` |
 | 8 | שמירה, תיעוד והגשה | Master | README, `docs/incidents.md`, `book.pdf`, `book.docx` | `git push` ו-qa-infra עובר |
