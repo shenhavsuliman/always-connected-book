@@ -186,3 +186,20 @@
 | LAYOUT-03 | תיבת "איך משחזרים את הספר" הועברה לפני `\pythonfile`, מיד אחרי פסקת הפתיחה | `chapters/09-appendix-code.tex` |
 
 לא קומפל (לפי ההוראות). צריך לבדוק בבנייה הבאה את `\num{>3:00}` ואת שלוש הרשומות החדשות ב-biber.
+
+## סבב 5: תיקוני תוכן
+
+| ID | מה השתנה | קובץ |
+|----|----------|------|
+| DATA-02 | נוספה רשומת `@online{oii2017press}`: Oxford Internet Institute, "Moderate amounts of screen time may not be bad for teenagers' well-being", 16.1.2017, https://www.oii.ox.ac.uk/moderate-amounts-of-screen-time-may-not-be-bad-for-teenagers-well-being/ (נבדק מול הדף: כל שש נקודות המפנה מופיעות בו). צוטטה לצד `przybylski2017` בפסקת נקודות המפנה, בכיתוב איור 5.1, בנספח ובסיכום. facts.md: המקור סומן "מאומת" | `refs.bib`, `chapters/05-wellbeing.tex`, `chapters/figures/fig-goldilocks.tex`, `chapters/09-appendix-code.tex`, `chapters/08-summary.tex`, `research/facts.md` |
+| CONT-05 | רשימת הפרקים במבוא ממוספרת 2–8: `\begin{enumerate}[start=2]` (ל-5 מתוך 7 הפרקים אין `\label{ch:...}`, ולכן לא `\ref`) | `chapters/01-intro.tex` |
+| CONT-06 | כיתוב איור 2.1: "הסימון של 2020 כ'שנת הקורונה' הוא פרשנות שלנו לקפיצה, ולא ממצא של המקור", בהתאם לטקסט בפרק 2. התווית בתוך ה-PNG עצמו (`make_graphs.py:54`) באחריות ה-Master | `chapters/figures/fig-internet-users.tex` |
+| LANG-04 (א) | "אם תחזית 2025... התממשה, בתוך שלוש שנים יתווספו" ← "התממשה, הרי שבתוך שלוש שנים נוספו" (זמן אחיד) | `chapters/06-smart-home.tex` |
+| LANG-04 (ב) | תיאורי הסימנים אחידים: $W$, $t$, $\beta_0$, $\beta_1$ ו-$\beta_2$ כולם "מייצג את" | `chapters/05-wellbeing.tex` |
+| LANG-04 (ג) | "טועמת מהדייסה שלהם: אחת" ← "טועמת משלוש קערות הדייסה שלהם: אחת" | `chapters/05-wellbeing.tex` |
+| LANG-04 (ד) | איור 4.1 ברבים: "הקשב שלך" ← "הקשב שלכם", "יחזיק אותך" ← "יחזיק אתכם" (`\heb{}` והמבנה נשמרו) | `chapters/figures/attention-loop.tex` |
+| TYPE-10 | כותרת התיבה: `"מסתכמת"` (ASCII) ← `”מסתכמת”`, כמו המירכאות בגוף הספר | `chapters/03-digital-day.tex` |
+| CONT-07 | כיתוב טבלה 3.1: "(משתמש טיפוסי, 2024)" ← "(משתמש טיפוסי, לפי דוח Digital 2024)" | `chapters/03-digital-day.tex` |
+| BIB-01 | `note = {Published <date>}` (או `Press release, published <date>`) בכל רשומת `@online` עם תאריך פרסום ידוע: kemp2024, kemp2025israel, itu2026data, iotanalytics2025, apple2007, openai2022, kleinrock2019, oii2017press. מנהל ה-`online` של biblatex-ieee מדפיס `note` (נבדק ב-`ieee.bbx`). שדות `date` נשמרו. הוסר `organization` הכפול (זהה למחבר) מ-loc1844 ומ-guinness1973 | `refs.bib` |
+
+לא קומפל (לפי ההוראות). בבנייה הבאה צריך לבדוק: מספור הרשימה במבוא (`start=2`), שהנספח עדיין נכנס בעמוד אחד, שהכיתובים הארוכים יותר של איורים 2.1 ו-5.1 לא מזיזים צף, והמירכאות ” בגופן הכותרות.

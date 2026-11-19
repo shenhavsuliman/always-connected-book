@@ -60,6 +60,7 @@ def cover_network():
 
 def smart_home():
     """בית חכם: בית במרכז, מכשירים מחוברים לרכזת (hub) ולענן."""
+    plt.rcParams["font.family"] = ["Gisha", "Arial"]   # Hebrew-capable font for the labels
     fig, ax = plt.subplots(figsize=(9, 5.6), dpi=200)
     fig.patch.set_facecolor("white")
     # הבית
@@ -68,19 +69,19 @@ def smart_home():
     # הענן
     for cx, cy, rr in [(0, 4.35, 0.55), (-0.6, 4.15, 0.42), (0.62, 4.15, 0.45), (0.25, 4.65, 0.4)]:
         ax.add_patch(Circle((cx, cy), rr, fc=SCREEN, ec="none", alpha=0.9, zorder=2))
-    ax.text(0, 4.25, "Cloud", ha="center", va="center", color="white", fontsize=16,
+    ax.text(0, 4.25, "ענן", ha="center", va="center", color="white", fontsize=16,
             fontweight="bold", zorder=3)
     # רכזת
     ax.add_patch(Circle((0, 0), 0.55, fc=NIGHT, ec=SCREEN, lw=3, zorder=4))
-    ax.text(0, 0, "Hub", ha="center", va="center", color="white", fontsize=15, fontweight="bold", zorder=5)
+    ax.text(0, 0, "רכזת", ha="center", va="center", color="white", fontsize=15, fontweight="bold", zorder=5)
     ax.plot([0, 0], [0.55, 3.8], color=SCREEN, lw=2, ls="--", zorder=1)
     # מכשירים: (x, y, צבע, תווית, צורה)
-    devices = [(-2.1, 1.1, SUN, "Smart\nlight"), (2.1, 1.1, NOTIF, "Camera"),
-               (-2.2, -1.3, LEAF, "Thermostat"), (2.2, -1.3, SCREEN, "Speaker"),
-               # IMG-03: one-line "Lock" label, bottom row raised, so no label crosses
-               # the wall or touches "Thermostat"
-               (-0.75, -1.45, NOTIF, "Lock"), (0.8, -1.45, SUN, "Fridge"),
-               (-1.15, 1.85, LEAF, "Plug"), (1.15, 1.85, SCREEN, "TV")]
+    # Round 5: Hebrew labels (the figure was English-only inside a Hebrew book).
+    # IMG-03: bottom row raised, one-line labels, so no label crosses the wall.
+    devices = [(-2.1, 1.1, SUN, "תאורה\nחכמה"), (2.1, 1.1, NOTIF, "מצלמה"),
+               (-2.2, -1.3, LEAF, "תרמוסטט"), (2.2, -1.3, SCREEN, "רמקול"),
+               (-0.75, -1.45, NOTIF, "מנעול"), (0.8, -1.45, SUN, "מקרר"),
+               (-1.15, 1.85, LEAF, "שקע"), (1.15, 1.85, SCREEN, "טלוויזיה")]
     for x, y, c, lab in devices:
         ax.plot([0, x], [0, y], color=c, lw=1.6, alpha=0.7, zorder=3)
         for k in (1, 2, 3):  # "גלי" Wi-Fi
@@ -93,7 +94,7 @@ def smart_home():
     ax.add_patch(Circle((4.75, 0.36), 0.09, color=NOTIF, zorder=7))
     ax.annotate("", xy=(4.15, -0.15), xytext=(0.6, -0.1),
                 arrowprops=dict(arrowstyle="<->", color=NIGHT, lw=1.5, ls=":"))
-    ax.text(4.5, -0.95, "You", ha="center", va="top", fontsize=14, fontweight="bold", color=NIGHT)
+    ax.text(4.5, -0.95, "אתם", ha="center", va="top", fontsize=14, fontweight="bold", color=NIGHT)
     ax.set_xlim(-4.0, 5.2)
     ax.set_ylim(-3.1, 5.2)
     ax.set_aspect("equal")
