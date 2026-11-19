@@ -9,7 +9,7 @@
 %        צהוב (רעיון) · ירוק (איזון)
 % ============================================================================
 \NeedsTeXFormat{LaTeX2e}
-\def\ConnectedVersion{2.5.1}
+\def\ConnectedVersion{2.5.2}
 \def\ConnectedDate{2026/11/18}
 \ProvidesClass{connected}[\ConnectedDate\space v\ConnectedVersion\space Always Connected book class]
 
@@ -69,6 +69,9 @@
 \setlength{\parskip}{0.45em}
 \widowpenalty=10000 \clubpenalty=10000   % TYPE-02: אין שורה בודדת בראש או בתחתית עמוד
 \setlength{\emergencystretch}{8em}   % TYPE-03: פחות שורות מתוחות מדי
+% v2.5.2 (BIDI-04): אין שבירת שורה אחרי מקף מפורש. תחילית עברית ("ב-", "ה-", "מ-")
+% נשארת צמודה למספר או למילה הלועזית שאחריה, למשל "ב-2015" או "ה-iPhone".
+\exhyphenpenalty=10000
 % IMG-01: איור גבוה לא יישב לבד בעמוד חצי ריק. עמוד צפים חייב להיות מלא לפחות 80%,
 % ואיור עד 85% מהעמוד יכול לעלות לראש העמוד עם טקסט מתחתיו.
 \renewcommand{\topfraction}{0.85}\renewcommand{\bottomfraction}{0.7}
@@ -214,7 +217,9 @@
 % ---------------------------------------------------------------- תיבות
 % כלל (חקר אירוע INC-08): מסגרת התיבה נבנית בסביבה אנגלית (LTR), והתוכן והכותרת בעברית.
 % אחרת, תחת bidi=basic, המסגרת זזה הצידה והכותרת נעלמת.
-\tcbset{boxbase/.style={enhanced, breakable, sharp corners=northwest, arc=5pt,
+% v2.5.2 (TYPE-07): התיבות אינן נשברות בין עמודים. כל התיבות בספר קצרות,
+% ותיבה חתוכה בלי כותרת המשך נראית כמו תקלה.
+\tcbset{boxbase/.style={enhanced, sharp corners=northwest, arc=5pt,
   boxrule=0pt, left=10pt, right=10pt, top=7pt, bottom=7pt,
   fonttitle=\headfont\bfseries, coltitle=white, before upper=\selectlanguage{hebrew}}}
 % \connected@box{שם}{כותרת ברירת מחדל}{אפשרויות tcolorbox}
@@ -251,8 +256,8 @@
 % כלל: תיבת קוד נבנית תמיד בסביבה אנגלית (מסגרת וכיוון LTR), הכותרת בעברית.
 % שימוש:  \pythonfile[firstline=10, lastline=40]{python/make_graphs.py}{כותרת בעברית}
 \lstdefinestyle{connectedpy}{language=Python, basicstyle=\ttfamily\scriptsize,  % v2.5.1 (LAYOUT-01): פחות שבירות, התיבה נכנסת בעמוד
-  keywordstyle=\color{screen!70!night}\bfseries, commentstyle=\color{night!55}\itshape,
-  stringstyle=\color{notif!80!night}, numbers=left, numberstyle=\tiny\color{night!40},
+  keywordstyle=\color{screen!70!night}\bfseries, commentstyle=\color{night!75}\itshape,   % v2.5.2 (CODE-06): ניגודיות גבוהה יותר
+  stringstyle=\color{notif!80!night}, numbers=left, numberstyle=\tiny\color{night!65},
   showstringspaces=false, breaklines=true, columns=fullflexible, keepspaces=true,
   breakindent=1.8em, breakautoindent=true,                           % CODE-05 (v2.5.0)
   postbreak=\mbox{\textcolor{screen}{$\hookrightarrow$}\space}}
@@ -283,7 +288,8 @@
 % ציטוט IEEE ([1]) הוא יחידה אנגלית אחת: כך הסוגריים המרובעים לא מתהפכים.
 \NewCommandCopy\connected@parencite\parencite
 \NewCommandCopy\connected@textcite\textcite
-\RenewDocumentCommand\parencite{m}{\mbox{\foreignlanguage{english}{\connected@parencite{#1}}}}
+% v2.5.2 (TYPE-09): רווח בלתי שביר לפני הציטוט, כך ש-"[2]" לא יפתח שורה לבדו.
+\RenewDocumentCommand\parencite{m}{\unskip\nobreakspace\mbox{\foreignlanguage{english}{\connected@parencite{#1}}}}
 \RenewDocumentCommand\textcite{m}{\mbox{\foreignlanguage{english}{\connected@textcite{#1}}}}
 
 % ---------------------------------------------------------------- שער
