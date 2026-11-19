@@ -17,7 +17,7 @@ import pymupdf
 
 ROOT = Path(__file__).resolve().parent.parent
 PDF, LOG, CLS = ROOT / "main.pdf", ROOT / "main.log", ROOT / "connected.cls"
-REQUIRED_CLS = "2.5.1"            # the "standard" template version (qa-cls-version)
+REQUIRED_CLS = "2.5.2"            # the "standard" template version (qa-cls-version)
 HEB = "\u0590-\u05FF"
 FINALS = "ךםןףץ"
 
@@ -82,6 +82,15 @@ def infra():
             if not target.exists():
                 add("infra", "FAIL", f"{md.name}: broken link -> {ln}")
     add("infra", "PASS", "checked relative links and images in README/PRD/PLAN/docs")
+    # REPO-02 (round 4): every "N Skills" / "N סקילים" claim in the docs matches the real count
+    real = len(skills)
+    for md in [ROOT / "README.md", ROOT / "PLAN.md", ROOT / "TODO.md", ROOT / "PRD.md"]:
+        if md.exists():
+            for claimed in re.findall(r"(\d+)\s*(?:Skills|סקילים)|Skills \((\d+)\)", md.read_text(encoding="utf-8")):
+                c = int(next(x for x in claimed if x))
+                if c not in (real, 8, 7):  # 8 = mandatory QA family; 7 = "qa-super + 7 skills"
+                    add("infra", "FAIL", f"{md.name}: claims {c} skills, repository has {real}")
+    add("infra", "PASS", f"skill-count claims checked against {real} skills")
 
 
 # ------------------------------------------------------------------ qa-cls-version
@@ -104,6 +113,26 @@ def cls_version():
 # ------------------------------------------------------------------ qa-typeset
 def typeset():
     log = LOG.read_text(encoding="utf-8", errors="ignore")
+    # QA-04 / LAYOUT-03 (round 4): a nearly empty page that is NOT the last page of a chapter
+    # (the next page does not open a chapter, i.e. has no title span >= 26pt)
+    doc = pymupdf.open(PDF)
+
+    def opens_chapter(pg):
+        return any(s["size"] >= 26 for b in pg.get_text("dict")["blocks"] for l in b.get("lines", [])
+                   for s in l["spans"] if s["text"].strip())
+    for i in range(1, doc.page_count - 1):
+        pg = doc[i]
+        chars = len(re.sub(r"\s", "", pg.get_text()))
+        # how far down the page the content reaches (footer excluded): catches a page where
+        # a box was pushed to the next page, even when the page still holds some text
+        bottoms = [b[3] for b in pg.get_text("blocks") if b[3] < pg.rect.height * 0.9]
+        fill = (max(bottoms) / (pg.rect.height * 0.9)) if bottoms else 0
+        if (chars < 450 or fill < 0.6) and not opens_chapter(doc[i + 1]):
+            add("typeset", "WARN", f"p{i + 1}: page only {fill:.0%} filled ({chars} chars) and does not end a chapter")
+    # TYPE-07 (round 4): boxes must not break across pages (connected.cls boxbase)
+    cls = CLS.read_text(encoding="utf-8")
+    base = cls.split("boxbase/.style={", 1)[1].split("}}", 1)[0] if "boxbase/.style={" in cls else ""
+    add("typeset", "FAIL" if "breakable" in base else "PASS", "boxes are unbreakable (no split box without a title)")
     errs = re.findall(r"^! .*", log, re.M)
     add("typeset", "FAIL" if errs else "PASS", f"{len(errs)} LaTeX errors {errs[:3]}")
     undef = re.findall(r"(?:Reference|Citation) `([^']+)' .*undefined", log)
@@ -152,7 +181,31 @@ def bidi():
                 add("bidi", "WARN", f"p{n}: possibly glued/reversed range '{r[0]}{r[1]}'")
         if re.search(r"\)\s*\]\d+\[", t) or re.search(r"\]\d+\[", t):
             add("bidi", "FAIL", f"p{n}: mirrored citation bracket ']n['")
-    add("bidi", "PASS", f"scanned {len(pages)} pages for reversed words, glued ranges, mirrored brackets")
+    # QA-04 (round 4), geometric: text extraction splits LTR runs into separate "lines", so
+    # visual lines are rebuilt from word positions. In an RTL line the LEFTMOST word ends it
+    # and the RIGHTMOST word opens it.
+    doc = pymupdf.open(PDF)
+    for n, pg in enumerate(doc, 1):
+        if n == 1 or "Accessed:" in pg.get_text():          # cover / IEEE list: LTR layout
+            continue
+        lines = {}
+        for x0, y0, x1, y1, w, *_ in pg.get_text("words"):
+            w = w.replace("\xad", "")        # soft hyphens are extracted as their own "words"
+            if w:
+                lines.setdefault(round(y1 / 3), []).append((x0, w))
+        body = [ws for ws in lines.values() if len(ws) >= 4]  # body text lines only
+        for ws in body:
+            ws.sort()
+            end_word, start_word = ws[0][1], ws[-1][1]
+            # BIDI-04: Hebrew prefix ("ב-", "ה-", "ו-") stranded at the end of a line
+            # (the hyphen is not part of the extracted word; a lone prefix letter is the signal:
+            #  Hebrew has no one-letter words other than these prefixes)
+            if re.fullmatch(r"[בהוכלמש]-?", end_word):
+                add("bidi", "FAIL", f"p{n}: Hebrew prefix '{end_word}' split from its word at line end")
+            # TYPE-09: an IEEE citation "[n]" opening a line, cut off from its word
+            if re.fullmatch(r"\[\d+(?:,\d+)*\][.,]?", start_word):
+                add("bidi", "WARN", f"p{n}: citation '{start_word}' opens a line, cut off from its word")
+    add("bidi", "PASS", f"scanned {len(pages)} pages for reversed words, glued ranges, mirrored brackets, split prefixes")
     # BIDI-01: in David the ':' and ';' glyphs are narrow with wide gaps ("shalom : kesher").
     # Text extraction cannot see a gap inside a glyph, so we forbid the font for punctuation.
     bad_font = []
