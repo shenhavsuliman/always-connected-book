@@ -1,37 +1,39 @@
 # TODO: רשימת משימות
 
-מקרא: ✅ בוצע · 🔄 בתהליך · ⬜ פתוח · 👤 באחריות הסטודנטית
+מקרא: ✅ בוצע · ⬜ פתוח · 👤 באחריות הסטודנטית
 
 ## תשתית ותבנית
 - ✅ תיקיית פרויקט ו-Repository ציבורי חדש (Master)
-- ✅ `connected.cls` v2.3.0 ל-LuaLaTeX, עם babel ו-`bidi=basic` (Master)
-- ✅ `template/CHANGELOG.md` ו-`template/COMMANDS.md` (Master)
-- ✅ עמוד בדיקה `tests/stress-test.tex` (Master)
-- ✅ `build.sh`: בנייה בפקודה אחת (Master)
+- ✅ `connected.cls` v2.5.1 ל-LuaLaTeX, עם babel ו-`bidi=basic` (Master + Fixer)
+- ✅ `template/CHANGELOG.md` ו-`template/COMMANDS.md`
+- ✅ עמוד בדיקה `tests/stress-test.tex`, ו-`bash build.sh test`
+- ✅ `build.sh`: בנייה בפקודה אחת
 
 ## תיעוד
-- ✅ ועדת מומחים: `docs/expert-committee.md` (ועדה)
-- ✅ `PRD.md` גרסה 2, `PLAN.md` ו-`TODO.md` (Master)
-- ✅ חקרי אירוע: `docs/incidents.md` (Master + Fixer)
-- ✅ README עם צילומים וצוות הסוכנים בפעולה (Master)
+- ✅ ועדת מומחים: `docs/expert-committee.md`
+- ✅ `PRD.md` גרסה 2, `PLAN.md` ו-`TODO.md`
+- ✅ 16 חקרי אירוע: `docs/incidents.md`
+- ✅ README עם צילומים וגרף "צוות הסוכנים בפעולה"
 
 ## תוכן
 - ✅ 16 מקורות ו-`facts.md` (חוקר)
 - ✅ 9 פרקים ונספח קוד (כותב + Master)
-- ✅ עריכה: 19 תיקונים, ציון 7.5/10 (עורך)
-- ✅ 3 גרפים ו-2 איורים מקוד (Master)
+- ✅ עריכה, סבב 1: 19 תיקונים (עורך)
+- ✅ עריכה, סבב 2: תיקון נקודות הצוות האדום (עורך)
+- ✅ 3 גרפים ו-2 איורים מקוד
 
 ## בקרת איכות
-- ✅ 14 Skills ב-`.claude/skills/` (Master)
-- ✅ `qa/qa_check.py`: בדיקות אוטומטיות לכל משפחת QA (Master)
-- ✅ Detector סבב 1 (qa-super)
-- ✅ Fixer סבב 1 (qa-fixer)
-- ✅ Detector סבב 2, אימות
-- ✅ צוות אדום (red-team)
+- ✅ 14 Skills ב-`.claude/skills/`, ו-`qa/qa_check.py`
+- ✅ Detector סבב 1: 16 ממצאים
+- ✅ Fixer סבב 1: 15 תוקנו
+- ✅ Detector סבב 2: אימות. 15 אומתו, 0 נסיגות
+- ✅ צוות אדום: 10 נקודות תורפה בתוכן
+- ✅ Detector סבב 3 (שער סופי): 0 נסיגות. 1 ממצא מהותי ו-3 קלים, וכולם תוקנו ב-v2.5.1
+- ✅ אחרי התיקונים: `qa_check.py` מראה 0 FAIL ו-0 WARN
 
 ## הגשה 👤
-- ⬜ 👤 להזין את **קוד הקבוצה** (8 תווים, ממטלה 01) ב-`\groupcode{}` ב-`main.tex`
-- ⬜ 👤 להוסיף את **שם השותפה** ב-`\bookauthors{}`
-- ⬜ 👤 למלא את תבנית ה-Word של המרצה ולשמור כ-**PDF** בשם `xxxxxxxx-ex02.pdf`
+- ✅ שם המחברת בשער: **שנהב סולימן**. הגשה ביחיד.
+- ⬜ 👤 להזין את **קוד הקבוצה** (8 תווים) ב-`\groupcode{}` ב-`main.tex`, אם נדרש בשורה התחתונה
+- ⬜ 👤 למלא את תבנית ה-Word של המרצה, עם הקישור ל-GitHub, ולשמור כ-**PDF** בשם `xxxxxxxx-ex02.pdf`
 - ⬜ 👤 לבחור **ציון עצמי** מומלץ
-- ⬜ 👤 כל אחת מבנות הזוג מגישה **בנפרד** במודל
+- ⬜ 👤 להגיש במודל

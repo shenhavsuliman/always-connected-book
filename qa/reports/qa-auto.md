@@ -16,8 +16,8 @@
 | infra | PASS | stray or undocumented files in root: none |
 | infra | PASS | required file connected.lua |
 | infra | PASS | scanned 17 LaTeX sources for control characters |
-| cls-version | PASS | connected.cls v2.5.0 (standard: v2.5.0) |
-| cls-version | PASS | CHANGELOG entry for v2.5.0 |
+| cls-version | PASS | connected.cls v2.5.1 (standard: v2.5.1) |
+| cls-version | PASS | CHANGELOG entry for v2.5.1 |
 | typeset | PASS | 0 LaTeX errors [] |
 | typeset | PASS | 0 undefined refs/cites [] |
 | typeset | PASS | 0 overfull hbox > 5pt: [] |

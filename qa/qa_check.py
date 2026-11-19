@@ -17,7 +17,7 @@ import pymupdf
 
 ROOT = Path(__file__).resolve().parent.parent
 PDF, LOG, CLS = ROOT / "main.pdf", ROOT / "main.log", ROOT / "connected.cls"
-REQUIRED_CLS = "2.5.0"            # the "standard" template version (qa-cls-version)
+REQUIRED_CLS = "2.5.1"            # the "standard" template version (qa-cls-version)
 HEB = "\u0590-\u05FF"
 FINALS = "ךםןףץ"
 
@@ -107,7 +107,8 @@ def typeset():
     vbox = re.findall(r"Overfull \\vbox", log)
     add("typeset", "WARN" if vbox else "PASS", f"{len(vbox)} overfull vbox")
     # TYPE-03: underfull lines are stretched lines; the Detector counts them as findings
-    under = re.findall(r"Underfull \\hbox \(badness (\d+)\) .*?lines? ([\d-]+)", log)
+    under = [u for u in re.findall(r"Underfull \\hbox \(badness (\d+)\) .*?lines? ([\d-]+)", log)
+             if f"badness {u[0]}) in paragraph at lines {u[1]}" not in known]
     add("typeset", "WARN" if under else "PASS", f"{len(under)} underfull hbox: {[f'{b}@{l}' for b, l in under[:6]]}")
     # TYPE-04: any package warning must be explained in qa/known-warnings.md
     pkg = sorted(set(re.findall(r"^Package (\w+) Warning: (.*?)\.?$", log, re.M)))

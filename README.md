@@ -125,7 +125,7 @@ python qa/qa_check.py  # הבדיקות האוטומטיות של כל משפח�
 ```
 latex-book/
 ├── main.tex                    ← הקובץ הראשי
-├── connected.cls  connected.lua ← התבנית (v2.5.0) ועזר Lua לתיבות הקוד
+├── connected.cls  connected.lua ← התבנית (v2.5.1) ועזר Lua לתיבות הקוד
 ├── refs.bib                    ← 16 מקורות (IEEE)
 ├── chapters/                   ← תקציר, 8 פרקים, נספח קוד, figures/
 ├── python/                     ← make_graphs · make_images · make_agents_chart · render_pages

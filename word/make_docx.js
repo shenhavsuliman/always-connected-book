@@ -322,7 +322,7 @@ const cover = [
   new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 300 },
     children: runs([{ text: "ספר שנכתב ב-LaTeX בעזרת צוות סוכני בינה מלאכותית" }], { font: HEAD, size: 24, color: C.ink }) }),
   new Paragraph({ alignment: AlignmentType.CENTER,
-    children: runs([{ text: "שנהב סולימאן  |  2026" }], { font: HEAD, size: 22, color: C.muted }) }),
+    children: runs([{ text: "שנהב סולימן  |  2026" }], { font: HEAD, size: 22, color: C.muted }) }),
   new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 400 },
     children: runs([{ text: "גרסת Word לעריכה. המקור הרשמי הוא קובצי ה-LaTeX וה-PDF שנבנה מהם." }], { size: 18, color: C.muted }) }),
 ];

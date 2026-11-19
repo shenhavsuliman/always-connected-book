@@ -9,7 +9,7 @@
 %        צהוב (רעיון) · ירוק (איזון)
 % ============================================================================
 \NeedsTeXFormat{LaTeX2e}
-\def\ConnectedVersion{2.5.0}
+\def\ConnectedVersion{2.5.1}
 \def\ConnectedDate{2026/11/18}
 \ProvidesClass{connected}[\ConnectedDate\space v\ConnectedVersion\space Always Connected book class]
 
@@ -88,7 +88,8 @@
 
 % ---------------------------------------------------------------- סימון שפה
 % כלל: כל מילה, שם או ראשי תיבות באנגלית נעטפים ב-\en{}. ביטוי רב-מילים = יחידה אחת.
-\newcommand{\en}[1]{\foreignlanguage{english}{#1}}
+% v2.5.1 (TYPE-06, BIDI-03): ביטוי אנגלי הוא יחידה שאינה נשברת בין שורות
+\newcommand{\en}[1]{\mbox{\foreignlanguage{english}{#1}}}
 % מספר, אחוז, טווח, תאריך או גרסה כיחידה LTR אחת (למשל \num{2005--2024}, \num{72.3\%})
 \newcommand{\num}[1]{\foreignlanguage{english}{#1}}
 % עברית בתוך נוסחה: \mathheb{רווחה}
@@ -249,7 +250,7 @@
 % ---------------------------------------------------------------- תיבת קוד Python
 % כלל: תיבת קוד נבנית תמיד בסביבה אנגלית (מסגרת וכיוון LTR), הכותרת בעברית.
 % שימוש:  \pythonfile[firstline=10, lastline=40]{python/make_graphs.py}{כותרת בעברית}
-\lstdefinestyle{connectedpy}{language=Python, basicstyle=\ttfamily\footnotesize,
+\lstdefinestyle{connectedpy}{language=Python, basicstyle=\ttfamily\scriptsize,  % v2.5.1 (LAYOUT-01): פחות שבירות, התיבה נכנסת בעמוד
   keywordstyle=\color{screen!70!night}\bfseries, commentstyle=\color{night!55}\itshape,
   stringstyle=\color{notif!80!night}, numbers=left, numberstyle=\tiny\color{night!40},
   showstringspaces=false, breaklines=true, columns=fullflexible, keepspaces=true,
