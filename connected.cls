@@ -9,8 +9,8 @@
 %        צהוב (רעיון) · ירוק (איזון)
 % ============================================================================
 \NeedsTeXFormat{LaTeX2e}
-\def\ConnectedVersion{2.5.2}
-\def\ConnectedDate{2026/11/18}
+\def\ConnectedVersion{2.5.3}
+\def\ConnectedDate{2026/11/19}
 \ProvidesClass{connected}[\ConnectedDate\space v\ConnectedVersion\space Always Connected book class]
 
 \LoadClass[11pt, a4paper, openany]{report}
@@ -88,6 +88,14 @@
 \definecolor{codebg}{HTML}{F3F6F9}
 \AtBeginDocument{\color{ink}}
 \hypersetup{colorlinks=true, linkcolor=night, citecolor=screen, urlcolor=screen}
+% v2.5.3 (BIDI-05): every box switches language (LTR frame, Hebrew content), and babel
+% records each switch in the toc/lof/lot files. One "english" record landed before entry
+% 6.1 in the list of figures and laid it out LTR. All list entries are Hebrew (the main
+% language), so the lists ignore these records.
+\AtBeginDocument{\def\babel@toc#1#2{}}
+% v2.5.3: PDF metadata (title and author) from the book's details
+\AtBeginDocument{\hypersetup{pdftitle={\@booktitle: \@booksubtitle},
+  pdfauthor={\@bookauthors}, pdfsubject={\@englishtitle}}}  % pdflang is already set by babel
 
 % ---------------------------------------------------------------- סימון שפה
 % כלל: כל מילה, שם או ראשי תיבות באנגלית נעטפים ב-\en{}. ביטוי רב-מילים = יחידה אחת.
