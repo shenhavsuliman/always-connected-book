@@ -18,8 +18,8 @@
 | infra | PASS | scanned 17 LaTeX sources for control characters |
 | infra | PASS | checked relative links and images in README/PRD/PLAN/docs |
 | infra | PASS | skill-count claims checked against 13 skills |
-| cls-version | PASS | connected.cls v2.5.2 (standard: v2.5.2) |
-| cls-version | PASS | CHANGELOG entry for v2.5.2 |
+| cls-version | PASS | connected.cls v2.5.3 (standard: v2.5.3) |
+| cls-version | PASS | CHANGELOG entry for v2.5.3 |
 | typeset | PASS | boxes are unbreakable (no split box without a title) |
 | typeset | PASS | 0 LaTeX errors [] |
 | typeset | PASS | 0 undefined refs/cites [] |
@@ -48,6 +48,9 @@
 | img | PASS | image file images/goldilocks.png exists |
 | img | PASS | image file images/internet_users.png exists |
 | img | PASS | 0 'float too large' warnings |
+| img | PASS | internet_users.png: label/legend overlaps none |
+| img | PASS | daily_time.png: label/legend overlaps none |
+| img | PASS | goldilocks.png: label/legend overlaps none |
 | img | PASS | figure alone on a mostly empty page: pdf pages [] |
 | img | PASS | 0 long captions in the list of figures (use \caption[short]{long}) |
 | code | PASS | 1 pythonbox listings |
@@ -61,4 +64,4 @@
 | code | PASS | pythonbox has its own background (codebg) |
 | code | PASS | pythonbox is built inside an English (LTR) environment |
 
-**Total: 0 FAIL, 0 WARN, 58 PASS**
+**Total: 0 FAIL, 0 WARN, 61 PASS**

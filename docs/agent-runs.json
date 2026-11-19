@@ -1,15 +1,152 @@
 [
-  {"agent": "Researcher", "skill": "book-researcher", "model": "sonnet", "phase": "content", "seconds": 507, "tokens": 131090, "tools": 67, "date": "2026-11-15"},
-  {"agent": "Writer", "skill": "book-writer", "model": "opus", "phase": "content", "seconds": 482, "tokens": 121458, "tools": 43, "date": "2026-11-15"},
-  {"agent": "Editor", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 311, "tokens": 141801, "tools": 27, "date": "2026-11-15"},
-  {"agent": "Expert committee", "skill": "04-expert-committee", "model": "sonnet", "phase": "spec", "seconds": 52, "tokens": 61171, "tools": 5, "date": "2026-11-18"},
-  {"agent": "Detector round 1", "skill": "qa-super", "model": "sonnet", "phase": "qa", "seconds": 241, "tokens": 119891, "tools": 43, "date": "2026-11-18"},
-  {"agent": "Fixer round 1", "skill": "qa-fixer", "model": "sonnet", "phase": "qa", "seconds": 1355, "tokens": 229154, "tools": 144, "date": "2026-11-18"},
-  {"agent": "Detector round 2", "skill": "qa-super", "model": "sonnet", "phase": "qa", "seconds": 143, "tokens": 106394, "tools": 26, "date": "2026-11-18"},
-  {"agent": "Red team", "skill": "red-team", "model": "sonnet", "phase": "qa", "seconds": 71, "tokens": 103321, "tools": 14, "date": "2026-11-18"},
-  {"agent": "Editor round 2", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 252, "tokens": 135577, "tools": 45, "date": "2026-11-18"},
-  {"agent": "Detector round 3", "skill": "qa-super", "model": "sonnet", "phase": "qa", "seconds": 110, "tokens": 106171, "tools": 25, "date": "2026-11-18"},
-  {"agent": "Proofreader", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 227, "tokens": 127613, "tools": 50, "date": "2026-11-19"},
-  {"agent": "Strict grader (round 4)", "skill": "qa-super", "model": "opus", "phase": "qa", "seconds": 414, "tokens": 202560, "tools": 64, "date": "2026-11-19"},
-  {"agent": "Editor round 4", "skill": "book-editor", "model": "opus", "phase": "content", "seconds": 191, "tokens": 108236, "tools": 55, "date": "2026-11-19"}
+ {
+  "agent": "Researcher",
+  "skill": "book-researcher",
+  "model": "sonnet",
+  "phase": "content",
+  "seconds": 507,
+  "tokens": 131090,
+  "tools": 67,
+  "date": "2026-11-15"
+ },
+ {
+  "agent": "Writer",
+  "skill": "book-writer",
+  "model": "opus",
+  "phase": "content",
+  "seconds": 482,
+  "tokens": 121458,
+  "tools": 43,
+  "date": "2026-11-15"
+ },
+ {
+  "agent": "Editor",
+  "skill": "book-editor",
+  "model": "opus",
+  "phase": "content",
+  "seconds": 311,
+  "tokens": 141801,
+  "tools": 27,
+  "date": "2026-11-15"
+ },
+ {
+  "agent": "Expert committee",
+  "skill": "04-expert-committee",
+  "model": "sonnet",
+  "phase": "spec",
+  "seconds": 52,
+  "tokens": 61171,
+  "tools": 5,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Detector round 1",
+  "skill": "qa-super",
+  "model": "sonnet",
+  "phase": "qa",
+  "seconds": 241,
+  "tokens": 119891,
+  "tools": 43,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Fixer round 1",
+  "skill": "qa-fixer",
+  "model": "sonnet",
+  "phase": "qa",
+  "seconds": 1355,
+  "tokens": 229154,
+  "tools": 144,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Detector round 2",
+  "skill": "qa-super",
+  "model": "sonnet",
+  "phase": "qa",
+  "seconds": 143,
+  "tokens": 106394,
+  "tools": 26,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Red team",
+  "skill": "red-team",
+  "model": "sonnet",
+  "phase": "qa",
+  "seconds": 71,
+  "tokens": 103321,
+  "tools": 14,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Editor round 2",
+  "skill": "book-editor",
+  "model": "opus",
+  "phase": "content",
+  "seconds": 252,
+  "tokens": 135577,
+  "tools": 45,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Detector round 3",
+  "skill": "qa-super",
+  "model": "sonnet",
+  "phase": "qa",
+  "seconds": 110,
+  "tokens": 106171,
+  "tools": 25,
+  "date": "2026-11-18"
+ },
+ {
+  "agent": "Proofreader",
+  "skill": "book-editor",
+  "model": "opus",
+  "phase": "content",
+  "seconds": 227,
+  "tokens": 127613,
+  "tools": 50,
+  "date": "2026-11-19"
+ },
+ {
+  "agent": "Strict grader (round 4)",
+  "skill": "qa-super",
+  "model": "opus",
+  "phase": "qa",
+  "seconds": 414,
+  "tokens": 202560,
+  "tools": 64,
+  "date": "2026-11-19"
+ },
+ {
+  "agent": "Editor round 4",
+  "skill": "book-editor",
+  "model": "opus",
+  "phase": "content",
+  "seconds": 191,
+  "tokens": 108236,
+  "tools": 55,
+  "date": "2026-11-19"
+ },
+ {
+  "agent": "Strict grader (round 5)",
+  "skill": "qa-super",
+  "model": "opus",
+  "phase": "qa",
+  "seconds": 620,
+  "tokens": 219308,
+  "tools": 80,
+  "date": "2026-11-19"
+ },
+ {
+  "agent": "Editor round 5",
+  "skill": "book-editor",
+  "model": "opus",
+  "phase": "content",
+  "seconds": 144,
+  "tokens": 105883,
+  "tools": 44,
+  "date": "2026-11-19"
+ }
 ]

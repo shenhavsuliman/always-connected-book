@@ -16,10 +16,10 @@
 |---|-------|-------|-------|
 | R1 | 15 עמודים לפחות, עברית ואנגלית | 32 עמודים | `qa-infra` |
 | R2 | LuaLaTeX (MiKTeX) | `build.sh` | `qa-typeset` |
-| R3 | תבנית `.cls` | `connected.cls` v2.5.2 + CHANGELOG + COMMANDS | `qa-cls-version` |
+| R3 | תבנית `.cls` | `connected.cls` v2.5.3 + CHANGELOG + COMMANDS | `qa-cls-version` |
 | R4 | `main.tex` וקובץ `.tex` לכל פרק | `chapters/00`–`09` | `qa-infra` |
 | R5 | PRD, PLAN, TODO, README | בשורש | `qa-infra` |
-| R6 | תוכן עניינים, פרקים, ביבליוגרפיה IEEE | `biblatex-ieee`, 19 מקורות | `qa-typeset` |
+| R6 | תוכן עניינים, פרקים, ביבליוגרפיה IEEE | `biblatex-ieee`, 20 מקורות | `qa-typeset` |
 | R7 | תמונה, טבלה, נוסחה | 5 איורים, 2 טבלאות, 2 משוואות ממוספרות | `qa-img`, `qa-table` |
 | R8 | גרפים בקוד Python | 3 גרפים ב-`make_graphs.py` | `qa-img` |
 | R9 | Footer + Banner מקצועיים | באנר כחול-לילה ושורה תחתונה "עמוד N מתוך M" | ויזואלי |
@@ -59,7 +59,7 @@
 | 7. איזון דיגיטלי | `07-balance.tex` | רשימת תיוג |
 | 8. סיכום | `08-summary.tex` | — |
 | נספח א | `09-appendix-code.tex` | תיבת קוד `pythonbox` |
-| מקורות | IEEE | 19 רשומות |
+| מקורות | IEEE | 20 רשומות |
 
 ## 5. ארכיטקטורת הסוכנים
 | סוכן | Skill | מודל | תפקיד |
