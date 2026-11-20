@@ -17,7 +17,7 @@ import pymupdf
 
 ROOT = Path(__file__).resolve().parent.parent
 PDF, LOG, CLS = ROOT / "main.pdf", ROOT / "main.log", ROOT / "connected.cls"
-REQUIRED_CLS = "2.5.3"            # the "standard" template version (qa-cls-version)
+REQUIRED_CLS = "2.5.4"            # the "standard" template version (qa-cls-version)
 HEB = "\u0590-\u05FF"
 FINALS = "ךםןףץ"
 
@@ -206,6 +206,19 @@ def bidi():
             if re.fullmatch(r"\[\d+(?:,\d+)*\][.,]?", start_word):
                 add("bidi", "WARN", f"p{n}: citation '{start_word}' opens a line, cut off from its word")
     add("bidi", "PASS", f"scanned {len(pages)} pages for reversed words, glued ranges, mirrored brackets, split prefixes")
+    # BIDI-05 / INC-22 (round 6): in the TOC and the lists of figures/tables every entry number
+    # ("2.1", "5.1") must sit at the RIGHT side of the page (RTL). One LTR entry flipped to the left.
+    for n, pg in enumerate(doc, 1):
+        t = pg.get_text()
+        if not any(h in t for h in ("תוכן העניינים", "רשימת האיורים", "רשימת הטבלאות")):
+            continue
+        w = pg.rect.width
+        nums = [(round(x0), wd) for x0, y0, x1, y1, wd, *_ in pg.get_text("words")
+                if re.fullmatch(r"\d+\.\d+", wd) and x0 > 60]
+        left = [wd for x0, wd in nums if x0 < w * 0.5]
+        add("bidi", "FAIL" if left else "PASS",
+            f"p{n}: list entries laid out LTR (number on the left): {left[:5]}" if left
+            else f"p{n}: {len(nums)} list/TOC entry numbers, all on the right (RTL)")
     # BIDI-01: in David the ':' and ';' glyphs are narrow with wide gaps ("shalom : kesher").
     # Text extraction cannot see a gap inside a glyph, so we forbid the font for punctuation.
     bad_font = []
