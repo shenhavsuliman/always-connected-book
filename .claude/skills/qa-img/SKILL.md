@@ -23,3 +23,14 @@ description: Checks figures in the book — image files exist, every figure has 
 ## Where fixes belong
 - Size or placement policy → template or `\includegraphics` width in the figure wrapper
 - Content of a graph → `python/make_graphs.py` or `python/make_images.py`. Never edit the PNG by hand.
+
+## Automatic overlap check (added in round 6, INC-29)
+`python/overlap_check.py` runs inside **both** `make_graphs.py` and `make_images.py`, before every image is saved. It reports:
+- a legend or text label covering drawn line points: segments are split into 60 points, so the middle of a straight line counts too
+- a label crossing polygon edges (walls, roof)
+- a label touching another node circle
+- two labels overlapping
+
+The result is written to `images/overlap-report.json`, and `python qa/qa_check.py img` FAILs on any finding.
+
+**Known limits:** the check skips the semi-transparent halo rings (decorative, alpha < 1), and it doesn't cover TikZ figures (figure 4.1). Check those visually on the rendered page, and in `tests/stress-test.tex` for TikZ.

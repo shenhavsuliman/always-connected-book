@@ -32,3 +32,9 @@ description: Checks RTL/LTR correctness in the Hebrew/English book PDF — rever
 8. Use only the template's commands. Do not invent new ones.
 
 **Never "fix" reversed Hebrew by typing it backwards.** Fix the direction marking.
+
+## Geometric checks (added in rounds 4 and 6)
+`python qa/qa_check.py bidi` rebuilds visual lines from word positions, because text extraction splits LTR runs into separate "lines". In an RTL line, the leftmost word ends the line.
+- **Prefix split (INC-19):** a lone prefix letter (ב/ה/ו/כ/ל/מ/ש) at the end of a line → FAIL
+- **Citation opening a line (TYPE-09):** "[n]" as the first word of a line → WARN
+- **List direction (INC-22):** in the TOC and the lists of figures and tables, every entry number ("5.1") must sit on the right half of the page → FAIL otherwise. Proven on the round-5 PDF: `FAIL ['6.1']`.
