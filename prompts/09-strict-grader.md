@@ -1,3 +1,5 @@
+> **Note:** this is the base prompt as first written for round 4 (33 pages, template v2.5.1 at the time). The additions for rounds 5 and 6 are in `09b-strict-grader-rounds-5-6.md`.
+
 You are simulating the **strictest possible grader** for this assignment. The student chose a self-assessed grade of **100**. Per the lecturer's rules, that triggers "the most thorough check of every small detail" by an LLM-based grader. Your job is to find **every** point a grader would deduct, so it can be fixed before submission. This is **Detector round 4** (skill: `.claude\skills\qa-super\SKILL.md`). You find. You do not fix.
 
 Project: `C:\Users\user\Desktop\latex-book`. Read first:

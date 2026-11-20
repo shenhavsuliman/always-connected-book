@@ -18,8 +18,8 @@
 | infra | PASS | scanned 17 LaTeX sources for control characters |
 | infra | PASS | checked relative links and images in README/PRD/PLAN/docs |
 | infra | PASS | skill-count claims checked against 13 skills |
-| cls-version | PASS | connected.cls v2.5.3 (standard: v2.5.3) |
-| cls-version | PASS | CHANGELOG entry for v2.5.3 |
+| cls-version | PASS | connected.cls v2.5.4 (standard: v2.5.4) |
+| cls-version | PASS | CHANGELOG entry for v2.5.4 |
 | typeset | PASS | boxes are unbreakable (no split box without a title) |
 | typeset | PASS | 0 LaTeX errors [] |
 | typeset | PASS | 0 undefined refs/cites [] |
@@ -29,6 +29,10 @@
 | typeset | PASS | 0 package warnings not in known-warnings.md: [] |
 | typeset | PASS | footer numeral systems checked on every page |
 | bidi | PASS | scanned 32 pages for reversed words, glued ranges, mirrored brackets, split prefixes |
+| bidi | PASS | p3: 17 list/TOC entry numbers, all on the right (RTL) |
+| bidi | PASS | p4: 15 list/TOC entry numbers, all on the right (RTL) |
+| bidi | PASS | p5: 5 list/TOC entry numbers, all on the right (RTL) |
+| bidi | PASS | p6: 2 list/TOC entry numbers, all on the right (RTL) |
 | bidi | PASS | ':' or ';' set in font David (mis-spaced punctuation), pages [] |
 | table | PASS | 2 tables in chapters |
 | table | PASS | table 1: caption above the table |
@@ -51,6 +55,8 @@
 | img | PASS | internet_users.png: label/legend overlaps none |
 | img | PASS | daily_time.png: label/legend overlaps none |
 | img | PASS | goldilocks.png: label/legend overlaps none |
+| img | PASS | cover_network.png: label/legend overlaps none |
+| img | PASS | smart_home.png: label/legend overlaps none |
 | img | PASS | figure alone on a mostly empty page: pdf pages [] |
 | img | PASS | 0 long captions in the list of figures (use \caption[short]{long}) |
 | code | PASS | 1 pythonbox listings |
@@ -64,4 +70,4 @@
 | code | PASS | pythonbox has its own background (codebg) |
 | code | PASS | pythonbox is built inside an English (LTR) environment |
 
-**Total: 0 FAIL, 0 WARN, 61 PASS**
+**Total: 0 FAIL, 0 WARN, 67 PASS**

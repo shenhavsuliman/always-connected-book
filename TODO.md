@@ -4,7 +4,7 @@
 
 ## תשתית ותבנית
 - ✅ תיקיית פרויקט ו-Repository ציבורי חדש (Master)
-- ✅ `connected.cls` v2.5.3 ל-LuaLaTeX, עם babel ו-`bidi=basic` (Master + Fixer)
+- ✅ `connected.cls` v2.5.4 ל-LuaLaTeX, עם babel ו-`bidi=basic` (Master + Fixer)
 - ✅ `template/CHANGELOG.md` ו-`template/COMMANDS.md`
 - ✅ עמוד בדיקה `tests/stress-test.tex`, ו-`bash build.sh test`
 - ✅ `build.sh`: בנייה בפקודה אחת
@@ -12,7 +12,7 @@
 ## תיעוד
 - ✅ ועדת מומחים: `docs/expert-committee.md`
 - ✅ `PRD.md` גרסה 2, `PLAN.md` ו-`TODO.md`
-- ✅ 24 חקרי אירוע: `docs/incidents.md`
+- ✅ 29 חקרי אירוע: `docs/incidents.md`
 - ✅ README עם צילומים וגרף "צוות הסוכנים בפעולה"
 
 ## תוכן
@@ -36,7 +36,7 @@
 
 ## הגשה 👤
 - ✅ שם המחברת בשער: **שנהב סולימן**
-- ✅ **הגשה ביחיד באישור המרצה.** האישור ניתן בשיחה ישירה עם המרצה לפני ההגשה.
+- ✅ **הגשה ביחיד באישור המרצה.** האישור ניתן בשיחה ישירה עם המרצה ב-2026-11-19, לפני ההגשה.
 - ⬜ 👤 להזין את **קוד הקבוצה** (8 תווים) ב-`\groupcode{}` ב-`main.tex`, אם נדרש בשורה התחתונה
 - ⬜ 👤 למלא את תבנית ה-Word של המרצה, עם הקישור ל-GitHub, ולשמור כ-**PDF** בשם `xxxxxxxx-ex02.pdf`
 - ⬜ 👤 לבחור **ציון עצמי** מומלץ

@@ -16,7 +16,7 @@
 |---|-------|-------|-------|
 | R1 | 15 עמודים לפחות, עברית ואנגלית | 32 עמודים | `qa-infra` |
 | R2 | LuaLaTeX (MiKTeX) | `build.sh` | `qa-typeset` |
-| R3 | תבנית `.cls` | `connected.cls` v2.5.3 + CHANGELOG + COMMANDS | `qa-cls-version` |
+| R3 | תבנית `.cls` | `connected.cls` v2.5.4 + CHANGELOG + COMMANDS | `qa-cls-version` |
 | R4 | `main.tex` וקובץ `.tex` לכל פרק | `chapters/00`–`09` | `qa-infra` |
 | R5 | PRD, PLAN, TODO, README | בשורש | `qa-infra` |
 | R6 | תוכן עניינים, פרקים, ביבליוגרפיה IEEE | `biblatex-ieee`, 20 מקורות | `qa-typeset` |
