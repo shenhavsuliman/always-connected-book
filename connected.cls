@@ -9,7 +9,7 @@
 %        צהוב (רעיון) · ירוק (איזון)
 % ============================================================================
 \NeedsTeXFormat{LaTeX2e}
-\def\ConnectedVersion{2.5.3}
+\def\ConnectedVersion{2.5.4}
 \def\ConnectedDate{2026/11/19}
 \ProvidesClass{connected}[\ConnectedDate\space v\ConnectedVersion\space Always Connected book class]
 
@@ -55,8 +55,14 @@
 \RequirePackage{caption}
 \RequirePackage{setspace}
 \RequirePackage{needspace}   % TYPE-02: \Needspace{6\baselineskip} לפני פסקת הקדמה לרשימה
-\RequirePackage[style=english]{csquotes}  % מירכאות אנגליות בכותרות IEEE (INC-10)
+\RequirePackage[style=english, english=american]{csquotes}  % מירכאות אנגליות בכותרות IEEE (INC-10)
 \RequirePackage[backend=biber, style=ieee, sorting=none, dashed=false]{biblatex}
+% v2.5.4 (round 6): IEEE is American style. The comma and period go INSIDE the closing
+% quote mark ("Title," not "Title",)
+\DefineBibliographyExtras{english}{\uspunctuation}
+% v2.5.4 (round 6): in a Hebrew sentence, an English "and" between two author names reads
+% as a foreign word. "&" is neutral in both languages.
+\DeclareDelimFormat[textcite]{finalnamedelim}{\addspace\&\space}
 \RequirePackage[hidelinks]{hyperref}
 
 % TYPE-01: כתובות URL ברשימת המקורות לא נמתחות בצדק: גרירה לשמאל וקווי שבירה נוספים בכתובת.
