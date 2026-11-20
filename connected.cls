@@ -10,7 +10,7 @@
 % ============================================================================
 \NeedsTeXFormat{LaTeX2e}
 \def\ConnectedVersion{2.5.4}
-\def\ConnectedDate{2026/11/19}
+\def\ConnectedDate{2026/11/20}
 \ProvidesClass{connected}[\ConnectedDate\space v\ConnectedVersion\space Always Connected book class]
 
 \LoadClass[11pt, a4paper, openany]{report}
@@ -33,7 +33,7 @@
 \babelfont{sf}{Segoe UI}
 \babelfont[hebrew]{sf}{Gisha}
 \babelfont{tt}{Courier New}  % ל-Consolas אין אותיות עבריות (INC-09)
-\newfontfamily\headfont{Gisha}[Script=Hebrew, BoldFont=Gisha Bold]
+\newfontfamily\headfont{Gisha}[Script=Hebrew, BoldFont=Gisha Bold, Ligatures=TeX]  % v2.5.4 (PROC-06): -- → – in headings and captions
 
 % ---------------------------------------------------------------- חבילות
 \RequirePackage[a4paper, top=3.1cm, bottom=2.6cm, inner=2.4cm, outer=2.4cm,
