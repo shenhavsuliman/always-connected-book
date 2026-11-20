@@ -99,8 +99,9 @@ LABELS = {
     "above": "מעל השיא: כל שעה\nנוספת מורידה רווחה",
     "xlabel": "שעות שימוש ביום חול (t)", "ylabel": "רווחה נפשית יחסית W(t)",
     "title": "השערת גולדילוקס: לא מעט מדי ולא יותר מדי",
-    "note": "המחשה בלבד: השיא נבנה על נקודות המפנה מההודעה לעיתונות של "
-            "Oxford Internet Institute (2017) על המחקר; הגובה מנורמל",
+    # Hebrew only (round 7, BIDI-07): no Latin run inside the note, so its word order is
+    # the same in every renderer and text extractor. The source is cited in the caption.
+    "note": "המחשה בלבד: השיא נבנה על נקודות המפנה שדווחו, והגובה מנורמל. המקור בכיתוב האיור",
 }
 
 
