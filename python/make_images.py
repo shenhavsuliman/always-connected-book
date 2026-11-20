@@ -64,30 +64,37 @@ def smart_home():
     fig, ax = plt.subplots(figsize=(9, 5.6), dpi=200)
     fig.patch.set_facecolor("white")
     # הבית
-    ax.add_patch(Polygon([[-3.6, -2.75], [3.6, -2.75], [3.6, 1.0], [0, 3.0], [-3.6, 1.0]],
+    # round 6: walls and roof raised so the top-row labels sit inside the house
+    ax.add_patch(Polygon([[-3.6, -2.75], [3.6, -2.75], [3.6, 1.45], [0, 3.75], [-3.6, 1.45]],
                          closed=True, fc="#F5F7FA", ec=NIGHT, lw=3, zorder=1))
     # הענן
-    for cx, cy, rr in [(0, 4.35, 0.55), (-0.6, 4.15, 0.42), (0.62, 4.15, 0.45), (0.25, 4.65, 0.4)]:
+    for cx, cy, rr in [(0, 4.95, 0.55), (-0.6, 4.75, 0.42), (0.62, 4.75, 0.45), (0.25, 5.25, 0.4)]:
         ax.add_patch(Circle((cx, cy), rr, fc=SCREEN, ec="none", alpha=0.9, zorder=2))
-    ax.text(0, 4.25, "ענן", ha="center", va="center", color="white", fontsize=16,
+    ax.text(0, 4.85, "ענן", ha="center", va="center", color="white", fontsize=16,
             fontweight="bold", zorder=3)
     # רכזת
     ax.add_patch(Circle((0, 0), 0.55, fc=NIGHT, ec=SCREEN, lw=3, zorder=4))
     ax.text(0, 0, "רכזת", ha="center", va="center", color="white", fontsize=15, fontweight="bold", zorder=5)
-    ax.plot([0, 0], [0.55, 3.8], color=SCREEN, lw=2, ls="--", zorder=1)
+    ax.plot([0, 0], [0.55, 4.4], color=SCREEN, lw=2, ls="--", zorder=1)
     # מכשירים: (x, y, צבע, תווית, צורה)
     # Round 5: Hebrew labels (the figure was English-only inside a Hebrew book).
     # IMG-03: bottom row raised, one-line labels, so no label crosses the wall.
     devices = [(-2.1, 1.1, SUN, "תאורה\nחכמה"), (2.1, 1.1, NOTIF, "מצלמה"),
                (-2.2, -1.3, LEAF, "תרמוסטט"), (2.2, -1.3, SCREEN, "רמקול"),
                (-0.75, -1.45, NOTIF, "מנעול"), (0.8, -1.45, SUN, "מקרר"),
-               (-1.15, 1.85, LEAF, "שקע"), (1.15, 1.85, SCREEN, "טלוויזיה")]
+               (-1.0, 1.6, LEAF, "שקע"), (1.0, 1.6, SCREEN, "טלוויזיה")]
     for x, y, c, lab in devices:
-        ax.plot([0, x], [0, y], color=c, lw=1.6, alpha=0.7, zorder=3)
+        # IMG-06 (round 6): each link starts at the hub's edge (r = 0.55), not under its label
+        d = np.hypot(x, y)
+        ax.plot([0.55 * x / d, x], [0.55 * y / d, y], color=c, lw=1.6, alpha=0.7, zorder=3)
         for k in (1, 2, 3):  # "גלי" Wi-Fi
             ax.add_patch(Circle((x, y), 0.32 + 0.12 * k, fc="none", ec=c, lw=1, alpha=0.35 / k, zorder=3))
         ax.add_patch(Circle((x, y), 0.32, fc=c, ec="white", lw=2, zorder=6))
-        ax.text(x, y - 0.62, lab, ha="center", va="top", fontsize=12, color=NIGHT, zorder=7)
+        # top-row devices get their label ABOVE the node, so the link to the hub (which
+        # leaves the node downwards) cannot cross it (IMG-06: "טלוויזיה" sat on its own link)
+        above = y > 1.5
+        ax.text(x, y + 0.62 if above else y - 0.62, lab, ha="center", va="bottom" if above else "top",
+                fontsize=12, color=NIGHT, zorder=7)
     # בעלים עם סמארטפון
     ax.add_patch(FancyBboxPatch((4.2, -0.7), 0.6, 1.1, boxstyle="round,pad=0.03,rounding_size=0.1",
                                 fc=NIGHT, ec=SCREEN, lw=2, zorder=6))
@@ -96,7 +103,7 @@ def smart_home():
                 arrowprops=dict(arrowstyle="<->", color=NIGHT, lw=1.5, ls=":"))
     ax.text(4.5, -0.95, "אתם", ha="center", va="top", fontsize=14, fontweight="bold", color=NIGHT)
     ax.set_xlim(-4.0, 5.2)
-    ax.set_ylim(-3.1, 5.2)
+    ax.set_ylim(-3.1, 5.8)
     ax.set_aspect("equal")
     ax.axis("off")
     fig.savefig(OUT / "smart_home.png", bbox_inches="tight", pad_inches=0.1)
@@ -104,6 +111,8 @@ def smart_home():
 
 
 if __name__ == "__main__":
+    import overlap_check                    # IMG-06 (round 6): illustrations are checked too
+    overlap_check.install(OUT)
     cover_network()
     smart_home()
     print("images written to", OUT)

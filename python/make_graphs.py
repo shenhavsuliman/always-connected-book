@@ -99,13 +99,13 @@ LABELS = {
     "above": "מעל השיא: כל שעה\nנוספת מורידה רווחה",
     "xlabel": "שעות שימוש ביום חול (t)", "ylabel": "רווחה נפשית יחסית W(t)",
     "title": "השערת גולדילוקס: לא מעט מדי ולא יותר מדי",
-    "note": "המחשה בלבד: העקומות בנויות כך שהשיא ייפול על נקודות המפנה "
-            "שדווחו (Przybylski & Weinstein, 2017); הגובה מנורמל",
+    "note": "המחשה בלבד: השיא נבנה על נקודות המפנה מההודעה לעיתונות של "
+            "Oxford Internet Institute (2017) על המחקר; הגובה מנורמל",
 }
 
 
 def goldilocks():
-    # Weekday tipping points t* (hours): Przybylski & Weinstein 2017.
+    # Weekday tipping points t* (hours): OII press release (2017).
     # The curves ILLUSTRATE W(t) = b0 + b1*t - b2*t^2: built to peak
     # at t*, height normalized to 1 (they show WHERE, not how big).
     series = [("phone", 1 + 57 / 60, TEAL, "o"),
@@ -137,46 +137,10 @@ def goldilocks():
     plt.close(fig)
 
 
-def overlap_findings(fig):
-    """QA-04 / IMG-04: report a legend or text label that covers a plotted curve or point,
-    or two labels that overlap each other. Runs on every figure before it is saved."""
-    import itertools
-    fig.canvas.draw()
-    r = fig.canvas.get_renderer()
-    found = []
-    for ax in fig.axes:
-        # legend: 12px margin (RTL text can render wider than measured). Text labels: 2px,
-        # and an annotation's arrow is excluded (it is meant to touch the point it labels).
-        from matplotlib.text import Text
-        boxes = [("legend", ax.get_legend().get_window_extent(r).padded(12))] if ax.get_legend() else []
-        boxes += [(f"text '{t.get_text()[:25]}'", Text.get_window_extent(t, r).padded(2))
-                  for t in ax.texts if t.get_text()]
-        pts = np.vstack([ln.get_transform().transform(ln.get_xydata()) for ln in ax.lines
-                         if len(ln.get_xydata())] or [np.empty((0, 2))])
-        ab = ax.get_window_extent(r)          # only points that are drawn (not clipped away)
-        pts = pts[(pts[:, 0] >= ab.x0) & (pts[:, 0] <= ab.x1) & (pts[:, 1] >= ab.y0) & (pts[:, 1] <= ab.y1)]
-        for name, bb in boxes:
-            inside = ((pts[:, 0] > bb.x0) & (pts[:, 0] < bb.x1) & (pts[:, 1] > bb.y0) & (pts[:, 1] < bb.y1)).sum()
-            if inside:
-                found.append(f"{name} covers {inside} curve points")
-        for (n1, b1), (n2, b2) in itertools.combinations(boxes, 2):
-            if b1.overlaps(b2):
-                found.append(f"{n1} overlaps {n2}")
-    return found
-
-
 if __name__ == "__main__":
-    import json
-    from matplotlib.figure import Figure
-    report = {}
-    _save = Figure.savefig
-
-    def checked_save(self, fname, *a, **k):  # every graph is checked before it is written
-        report[Path(fname).name] = overlap_findings(self)
-        return _save(self, fname, *a, **k)
-    Figure.savefig = checked_save
+    import overlap_check                    # shared with make_images.py (QA-04, IMG-06)
+    overlap_check.install(OUT)              # every graph is checked before it is written
     internet_users()
     daily_time()
     goldilocks()
-    (OUT / "overlap-report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8")
-    print("graphs written to", OUT, "| overlaps:", {k: len(v) for k, v in report.items()})
+    print("graphs written to", OUT)
