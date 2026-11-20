@@ -158,5 +158,15 @@
   "tokens": 199309,
   "tools": 62,
   "date": "2026-11-19"
+ },
+ {
+  "agent": "Strict grader (round 7)",
+  "skill": "qa-super",
+  "model": "opus",
+  "phase": "qa",
+  "seconds": 406,
+  "tokens": 203944,
+  "tools": 54,
+  "date": "2026-11-20"
  }
 ]

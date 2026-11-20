@@ -14,3 +14,6 @@ The base prompt is `09-strict-grader.md` (written for round 4). For rounds 5 and
 | 4 | 82/100 | 0 / 9 / 20 |
 | 5 | 91/100 | 0 / 4 / 17 |
 | 6 | 94/100 | 0 / 3 / 10 |
+
+## Round 7 (2026-11-20)
+> Read your instructions from `prompts\09-strict-grader.md` and follow them exactly, with these changes: this is **Detector round 7**, and write the report to `qa\reports\detector-round-7.md`. First read `qa\reports\detector-round-6.md` and `qa\reports\fixer-round-6.md`. For every round-6 finding state VERIFIED-FIXED, STILL-OPEN or REGRESSED, and **verify every piece of evidence the Fixer cites** (rerun its commands, open the pages); a claim whose evidence does not hold is itself a major finding. Then search for NEW findings with the same strictness, including in the four new commits and template v2.5.4. The PDF is 32 pages (main.pdf / book.pdf, current), and GitHub origin/main is current (verify with git). Give the new estimated grade with the deductions listed. List only real deductions, not notes.
