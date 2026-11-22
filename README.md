@@ -9,7 +9,7 @@
 - **TikZ** לתרשימים
 
 את העבודה עשה **צוות של 8 תפקידי סוכנים** (ועדת מומחים, חוקר, כותב, עורך, מגיה, Detector, Fixer וצוות אדום), ומעליהם סוכן Master.
-**כלל התיקון:**
+**כלל התיקון ("חוק הברזל" של המטלה):** אף בעיית **עיצוב, עימוד או כיוון** לא תוקנה ישירות בטקסט. היא תוקנה בתבנית או בסקיל, כדי שלא תחזור. רק **תוכן** (ניסוח, נתון או מקור) תוקן בטקסט עצמו, כי שם הוא נמצא:
 - **תקלה שחוזרת** (BiDi, עימוד, תיבות או ציטוטים) תוקנה בתבנית `connected.cls`, ומספר הגרסה עלה. היסטוריית הגרסאות ב-[CHANGELOG](template/CHANGELOG.md).
 - **תקלה במקום אחד** (ניסוח, נתון, סדר בטבלה או מיקום תווית באיור) תוקנה בשורה עצמה. בסבבים 1 עד 5 התיקונים נעשו על ידי סוכן העורך ונרשמו ב-[editor-report](research/editor-report.md). בסבבים 6 ו-7 הם נעשו על ידי ה-Master ונרשמו בדוחות ה-Fixer ([fixer-round-6](qa/reports/fixer-round-6.md), [fixer-round-7](qa/reports/fixer-round-7.md)).
 
@@ -100,6 +100,10 @@
 | 5 | Fixer (עורך + Master) | תבנית v2.5.3, בדיקת חפיפה בגרפים, מקור OII, ו-INC-22 עד INC-24. **4 שורות סומנו FIXED בטעות**, ותוקנו בסבב 6 (INC-28) | [fixer-round-5](qa/reports/fixer-round-5.md) |
 | 6 | Detector מחמיר (Opus) | **94/100**. 13 תיקונים אומתו, 0 נסיגות, 3 מהותיים ו-10 קלים | [detector-round-6](qa/reports/detector-round-6.md) |
 | 6 | Fixer (Master) | כל ממצא עם ראיה. תבנית v2.5.4, בדיקת חפיפה גם באיורים, בדיקת כיוון לרשימות, ו-INC-25 עד INC-29 | [fixer-round-6](qa/reports/fixer-round-6.md) |
+| 7 | Detector מחמיר (Opus) | **96/100**. 0 קריטיים, 2 מהותיים ו-7 קלים. כל ראיה של ה-Fixer הורצה מחדש | [detector-round-7](qa/reports/detector-round-7.md) |
+| 7 | Fixer (Master) | כל הממצאים תוקנו או נשארו בהחלטה מנומקת (BIB-01). INC-30 | [fixer-round-7](qa/reports/fixer-round-7.md) |
+
+> הציונים בטבלה הם **הערכה פנימית של סוכן הבודק**, ששימשה למדידת התקדמות בין הסבבים. הם לא ציון ולא טענה על הציון.
 
 **חוק הברזל:** כל תיקון שחוזר בכמה מקומות בספר בוצע ב-[connected.cls](connected.cls), ו**הגרסה עלתה**. היסטוריית הגרסאות נמצאת ב-[CHANGELOG](template/CHANGELOG.md). כשה-Detector מצא תקלה שהבודק האוטומטי פספס, הבודק עצמו ([qa/qa_check.py](qa/qa_check.py)) תוקן כדי שיתפוס אותה בפעם הבאה.
 
@@ -138,6 +142,8 @@
 - Python 3 עם `matplotlib>=3.11 numpy pymupdf`
 - גופני Windows: Times New Roman, Gisha, Segoe UI, Courier New
 
+> **מגבלה ידועה:** התבנית משתמשת בגופנים שמגיעים עם Windows. על Mac או Linux צריך להתקין אותם, או להחליף אותם ב-`abelfont` שבראש `connected.cls`.
+
 ```bash
 bash build.sh          # גרפים → lualatex → biber → lualatex ×2 → book.pdf
 bash build.sh test     # וגם עמוד הבדיקה של התבנית (tests/stress-test.tex)
@@ -146,7 +152,7 @@ python qa/qa_check.py  # הבדיקות האוטומטיות של כל משפח�
 
 ## 📁 מבנה הפרויקט
 ```
-latex-book/
+always-connected-book/
 ├── main.tex                    ← הקובץ הראשי
 ├── connected.cls  connected.lua ← התבנית (v2.5.4) ועזר Lua לתיבות הקוד
 ├── refs.bib                    ← 20 מקורות (IEEE)
