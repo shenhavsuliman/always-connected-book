@@ -82,6 +82,30 @@
 
 ---
 
+## 📸 תהליך העבודה והקוד: צילומי מסך
+
+צילומים אמיתיים של המאגר, הדוחות והקוד, כפי שהם מוצגים ב-GitHub, ופלט של הרצה אמיתית.
+
+### התהליך
+| היסטוריית העבודה: commit נפרד לתבנית, לבדיקות, לתוכן ולמסמכים | הבודק המחמיר, סבב 4: הציון 82/100 וטבלת הניכויים |
+|:---:|:---:|
+| <img src="docs/screenshots/process/01-commits.jpg" width="420"> | <img src="docs/screenshots/process/02-strict-grader-82.jpg" width="420"> |
+| **דוח Fixer, סבב 7: לכל תיקון יש ראיה (INC-28, ‏INC-30)** | **13 ה-Skills ב-`.claude/skills/`** |
+| <img src="docs/screenshots/process/03-fixer-evidence.jpg" width="420"> | <img src="docs/screenshots/process/04-skills.jpg" width="420"> |
+
+### הקוד
+| התבנית `connected.cls`: גרסה, תאריך ובדיקת LuaLaTeX | התבנית: תיבות עם מסגרת LTR ותוכן עברי (INC-08) |
+|:---:|:---:|
+| <img src="docs/screenshots/process/05-code-cls-header.jpg" width="420"> | <img src="docs/screenshots/process/06-code-cls-boxes.jpg" width="420"> |
+| **`qa_check.py`: בדיקת BiDi גאומטרית (תחיליות, ציטוטים)** | **`overlap_check.py`: בדיקת חפיפות באיורים ובגרפים** |
+| <img src="docs/screenshots/process/07-code-qa-bidi.jpg" width="420"> | <img src="docs/screenshots/process/08-code-overlap-check.jpg" width="420"> |
+| **`make_graphs.py`: מילון תוויות עברי והפונקציה `goldilocks()`** | **הרצה אמיתית: בנייה, עמוד בדיקה, QA ו-git log** |
+| <img src="docs/screenshots/process/09-code-graphs.jpg" width="420"> | <img src="docs/screenshots/process/10-build-and-qa-run.png" width="420"> |
+
+> הסוכנים עצמם רצו ברקע, ולכן אין צילום מסך של הרגע שבו הם רצו. העדות לעבודתם היא הגרף "צוות הסוכנים בפעולה" שלמעלה, שנבנה מנתוני הריצה האמיתיים, והדוחות שכל סוכן כתב ב-[qa/reports/](qa/reports).
+
+---
+
 ## 🔴 לולאת בקרת האיכות: Detector ⇄ Fixer
 
 | סבב | מי | תוצאה | דוח |
